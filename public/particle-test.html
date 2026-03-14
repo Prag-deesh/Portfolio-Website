@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head><title>Particle Test</title></head>
+<body style="margin:0; overflow:hidden; background:#000;">
+<canvas id="c" style="position:fixed;inset:0;width:100vw;height:100vh;"></canvas>
+<div style="position:relative;z-index:10;color:white;padding:40px;font-family:sans-serif;">
+  <h1>If you see moving dots below this text, canvas works!</h1>
+</div>
+<script>
+const c = document.getElementById('c');
+const ctx = c.getContext('2d');
+const dpr = window.devicePixelRatio || 1;
+c.width = window.innerWidth * dpr;
+c.height = window.innerHeight * dpr;
+ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+const W = window.innerWidth, H = window.innerHeight;
+const particles = [];
+for (let i = 0; i < 300; i++) {
+  particles.push({
+    x: Math.random() * W,
+    y: Math.random() * H,
+    vx: (Math.random() - 0.5) * 2,
+    vy: (Math.random() - 0.5) * 2,
+    r: Math.random() * 3 + 1,
+  });
+}
+
+let mx = -999, my = -999;
+window.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+
+function animate() {
+  requestAnimationFrame(animate);
+  ctx.fillStyle = 'rgba(0,0,0,0.1)';
+  ctx.fillRect(0, 0, W, H);
+
+  for (const p of particles) {
+    // Mouse repel
+    const dx = mx - p.x, dy = my - p.y;
+    const dist = Math.sqrt(dx*dx + dy*dy);
+    if (dist < 150 && dist > 0) {
+      const f = (150 - dist) / 150;
+      p.vx -= (dx / dist) * f * 3;
+      p.vy -= (dy / dist) * f * 3;
+    }
+
+    p.vx *= 0.96;
+    p.vy *= 0.96;
+    p.x += p.vx;
+    p.y += p.vy;
+
+    // Wrap
+    if (p.x < 0) p.x = W;
+    if (p.x > W) p.x = 0;
+    if (p.y < 0) p.y = H;
+    if (p.y > H) p.y = 0;
+
+    // Draw
+    const speed = Math.sqrt(p.vx*p.vx + p.vy*p.vy);
+    const t = Math.min(speed / 3, 1);
+    const r = Math.floor(80 + t * 175);
+    const g = Math.floor(120 - t * 40);
+    const b = Math.floor(255 - t * 75);
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.r + t * 2, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(${r},${g},${b},0.8)`;
+    ctx.fill();
+  }
+
+  // Connection lines near mouse
+  if (mx > -100) {
+    for (let i = 0; i < particles.length; i++) {
+      const a = particles[i];
+      if (Math.abs(mx - a.x) > 150 || Math.abs(my - a.y) > 150) continue;
+      for (let j = i + 1; j < particles.length; j++) {
+        const b = particles[j];
+        const dd = (a.x-b.x)**2 + (a.y-b.y)**2;
+        if (dd < 5000) {
+          ctx.beginPath();
+          ctx.moveTo(a.x, a.y);
+          ctx.lineTo(b.x, b.y);
+          ctx.strokeStyle = `rgba(100,140,255,${0.15 * (1 - dd/5000)})`;
+          ctx.lineWidth = 0.5;
+          ctx.stroke();
+        }
+      }
+    }
+  }
+}
+animate();
+</script>
+</body>
+</html>

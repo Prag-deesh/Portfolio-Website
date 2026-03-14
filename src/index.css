@@ -1,13 +1,149 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@import "tailwindcss";
+
+/* ── Theme ── */
+@theme {
+  /* Pure monochrome — no color accent */
+  --color-accent: #1a1a1a;
+  --color-accent-hover: #000000;
+
+  /* Fonts */
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-heading: 'Space Grotesk', 'Inter', sans-serif;
+
+  /* Animations */
+  --animate-glow-pulse: glow-pulse 4s ease-in-out infinite alternate;
+  --animate-scroll-dot: scroll-dot 2s ease-in-out infinite;
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-float-delayed: float 6s ease-in-out 3s infinite;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+/* ── Light mode (default) — pure black on white ── */
+:root {
+  --bg-primary: hsl(0, 0%, 98%);
+  --bg-secondary: hsl(0, 0%, 94%);
+  --bg-card: rgba(255, 255, 255, 0.9);
+  --bg-card-hover: rgba(255, 255, 255, 1);
+  --bg-glass: rgba(255, 255, 255, 0.8);
+  --border-glass: rgba(0, 0, 0, 0.08);
+  --text-primary: hsl(0, 0%, 10%);
+  --text-secondary: hsl(0, 0%, 38%);
+  --text-muted: hsl(0, 0%, 55%);
+  --accent: hsl(0, 0%, 10%);
+  --accent-hover: hsl(0, 0%, 0%);
+  --accent-muted: hsla(0, 0%, 10%, 0.08);
+  --accent-orb-1: rgba(0, 0, 0, 0.04);
+  --accent-orb-2: rgba(0, 0, 0, 0.03);
+  --accent-orb-3: rgba(0, 0, 0, 0.03);
+}
+
+/* Dark mode — pure white on black */
+[data-theme="dark"] {
+  --bg-primary: hsl(0, 0%, 7%);
+  --bg-secondary: hsl(0, 0%, 12%);
+  --bg-card: rgba(24, 24, 24, 0.9);
+  --bg-card-hover: rgba(32, 32, 32, 1);
+  --bg-glass: rgba(18, 18, 18, 0.85);
+  --border-glass: rgba(255, 255, 255, 0.08);
+  --text-primary: hsl(0, 0%, 93%);
+  --text-secondary: hsl(0, 0%, 65%);
+  --text-muted: hsl(0, 0%, 45%);
+  --accent: hsl(0, 0%, 93%);
+  --accent-hover: hsl(0, 0%, 100%);
+  --accent-muted: hsla(0, 0%, 93%, 0.1);
+  --accent-orb-1: rgba(255, 255, 255, 0.04);
+  --accent-orb-2: rgba(255, 255, 255, 0.03);
+  --accent-orb-3: rgba(255, 255, 255, 0.03);
+}
+
+/* ── Base ── */
+html,
+body,
+#root {
+  background-color: transparent !important;
+}
+
+body {
+  font-family: var(--font-sans);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+  transition: color 0.4s ease;
+  overflow-x: hidden;
+}
+
+::selection {
+  background-color: var(--accent-muted);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg-secondary); }
+::-webkit-scrollbar-thumb { background: var(--text-muted); }
+
+/* ── Keyframes ── */
+@keyframes glow-pulse {
+  from { opacity: 0.08; transform: scale(0.95); }
+  to { opacity: 0.15; transform: scale(1.05); }
+}
+
+@keyframes scroll-dot {
+  0%, 100% { transform: translateY(0); opacity: 1; }
+  50% { transform: translateY(8px); opacity: 0.3; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-20px) rotate(3deg); }
+}
+
+/* ── Hero Avatar: morphing clip-path ── */
+.hero-avatar-clip {
+  clip-path: polygon(
+    50% 0%, 95% 15%, 100% 55%, 90% 95%, 50% 100%, 10% 95%, 0% 55%, 5% 15%
+  );
+  animation: geo-morph 8s ease-in-out infinite;
+}
+
+@keyframes geo-morph {
+  0%, 100% {
+    clip-path: polygon(
+      50% 0%, 95% 15%, 100% 55%, 90% 95%, 50% 100%, 10% 95%, 0% 55%, 5% 15%
+    );
+  }
+  25% {
+    clip-path: polygon(
+      50% 2%, 90% 10%, 98% 50%, 90% 90%, 50% 98%, 10% 90%, 2% 50%, 10% 10%
+    );
+  }
+  50% {
+    clip-path: polygon(
+      50% 0%, 85% 8%, 100% 50%, 85% 92%, 50% 100%, 15% 92%, 0% 50%, 15% 8%
+    );
+  }
+  75% {
+    clip-path: polygon(
+      50% 3%, 92% 12%, 97% 52%, 88% 93%, 50% 97%, 12% 93%, 3% 52%, 8% 12%
+    );
+  }
+}
+
+/* ── Hero Avatar: scan line ── */
+.hero-scanline::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 6px;
+  background: linear-gradient(
+    180deg,
+    transparent,
+    var(--text-primary),
+    transparent
+  );
+  opacity: 0.04;
+  animation: scanline-move 3s linear infinite;
+}
+
+@keyframes scanline-move {
+  0%   { top: -6px; }
+  100% { top: 100%; }
 }
