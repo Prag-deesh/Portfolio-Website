@@ -2,13 +2,13 @@
 
 > Monochrome portfolio with constellation backgrounds, plexus borders, dark/light theme, parallax scrolling, and smooth animations.
 
-[![Live Site](https://img.shields.io/badge/🚀_Live-pragadeesh.vercel.app-000?style=for-the-badge)](https://pragadeesh.vercel.app)
+[![Live Site](https://img.shields.io/badge/🚀_Live-pragadeesh.pages.dev-000?style=for-the-badge)](https://pragadeesh.pages.dev)
 
 ![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.9-3178C6?logo=typescript&logoColor=white)
 ![Tailwind](https://img.shields.io/badge/Tailwind-v4-06B6D4?logo=tailwindcss&logoColor=white)
 ![Vite](https://img.shields.io/badge/Vite-8-646CFF?logo=vite&logoColor=white)
-![Vercel](https://img.shields.io/badge/Deployed-Vercel-000?logo=vercel&logoColor=white)
+![Vercel](https://img.shields.io/badge/Deployed-Cloudflare_Pages-F38020?logo=cloudflarepages&logoColor=white)
 
 ---
 
@@ -92,12 +92,8 @@ VITE_EMAILJS_PUBLIC_KEY=your_public_key
 
 ### 🌐 Deploy
 
-Deployed on **Vercel** with auto-builds. Push to `main` → live in seconds.
-
-```bash
-vercel --prod     # manual deploy
-```
+Deployed on **Cloudflare Pages** with auto-builds. Push to `main` → live in seconds.
 
 ---
 
-<p align="center">Made with ❤️ by <a href="https://pragadeesh.vercel.app">Pragadeesh</a></p>
+<p align="center">Made with ❤️ by <a href="https://pragadeesh.pages.dev">Pragadeesh</a></p>
