@@ -15,6 +15,6 @@
   <circle cx="92" cy="8" r="2.5" fill="#e0e0e0" opacity="0.5"/>
   <circle cx="8" cy="92" r="2.5" fill="#e0e0e0" opacity="0.5"/>
   <circle cx="92" cy="92" r="2.5" fill="#e0e0e0" opacity="0.5"/>
-  <!-- P letter -->
-  <text x="50" y="68" font-family="Sora, Inter, sans-serif" font-weight="700" font-size="54" fill="#ededed" text-anchor="middle">P</text>
+  <!-- W letter -->
+  <text x="50" y="66" font-family="Sora, Inter, sans-serif" font-weight="700" font-size="46" fill="#ededed" text-anchor="middle">W</text>
 </svg>
