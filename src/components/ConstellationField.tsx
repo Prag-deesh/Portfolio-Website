@@ -36,8 +36,8 @@ const ConstellationField = ({ theme = 'dark', className = '' }: ConstellationFie
     }
     setSize()
 
-    // ── Particles ──
-    const COUNT = 300
+    // ── Particles — fewer on mobile for performance ──
+    const COUNT = w < 768 ? 120 : 300
     const particles: Particle[] = []
     for (let i = 0; i < COUNT; i++) {
       particles.push({

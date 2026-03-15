@@ -1,9 +1,11 @@
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { personalInfo } from '../helpers/constants'
 import type { HeroAvatarProps } from '../helpers/interfaces'
 
 /* Orbiting dots — 3 rings at different speeds & sizes */
-const orbitDots = [
+/* Radii are for md+ (370 container → 185 radius). Mobile uses scaled values. */
+const orbitDotsMd = [
   /* Inner ring — fast, small */
   { r: 155, speed: 12, size: 4, delay: 0 },
   { r: 155, speed: 12, size: 3, delay: 6 },
@@ -16,10 +18,20 @@ const orbitDots = [
   { r: 195, speed: 26, size: 2.5, delay: 13 },
   { r: 195, speed: 26, size: 2.5, delay: 20 },
 ]
+const orbitDotsSm = orbitDotsMd.map((d) => ({ ...d, r: Math.round(d.r * (160 / 185)) }))
 
 const HeroAvatar = ({ imageSrc, fallbackEmoji = '👨‍💻' }: HeroAvatarProps) => {
+  const [isMd, setIsMd] = useState(() => typeof window !== 'undefined' && window.innerWidth >= 768)
+  useEffect(() => {
+    const mq = window.matchMedia('(min-width: 768px)')
+    const handler = (e: MediaQueryListEvent) => setIsMd(e.matches)
+    mq.addEventListener('change', handler)
+    return () => mq.removeEventListener('change', handler)
+  }, [])
+  const orbitDots = isMd ? orbitDotsMd : orbitDotsSm
+
   return (
-    <div className="hero-avatar-wrap relative w-[320px] h-[320px] md:w-[370px] md:h-[370px]">
+    <div className="hero-avatar-wrap relative w-[280px] h-[280px] sm:w-[320px] sm:h-[320px] md:w-[370px] md:h-[370px]">
 
       {/* ── Corner brackets + node dots ── */}
       <div className="absolute inset-0 pointer-events-none">
@@ -43,12 +55,12 @@ const HeroAvatar = ({ imageSrc, fallbackEmoji = '👨‍💻' }: HeroAvatarProps
       {/* ── Pulsing orbit rings ── */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
         <motion.div
-          className="absolute w-[310px] h-[310px] md:w-[360px] md:h-[360px] border border-dashed border-[var(--text-primary)] rounded-full"
+          className="absolute w-[270px] h-[270px] sm:w-[310px] sm:h-[310px] md:w-[360px] md:h-[360px] border border-dashed border-[var(--text-primary)] rounded-full"
           animate={{ opacity: [0.06, 0.1, 0.06], scale: [1, 1.02, 1] }}
           transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
         />
         <motion.div
-          className="absolute w-[280px] h-[280px] md:w-[330px] md:h-[330px] border border-dashed border-[var(--text-primary)] rounded-full"
+          className="absolute w-[240px] h-[240px] sm:w-[280px] sm:h-[280px] md:w-[330px] md:h-[330px] border border-dashed border-[var(--text-primary)] rounded-full"
           animate={{ opacity: [0.04, 0.07, 0.04], scale: [1, 0.98, 1] }}
           transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
         />
@@ -87,7 +99,7 @@ const HeroAvatar = ({ imageSrc, fallbackEmoji = '👨‍💻' }: HeroAvatarProps
       ))}
 
       {/* ── Main image container ── */}
-      <div className="absolute inset-[22px] md:inset-[18px] overflow-hidden hero-avatar-clip">
+      <div className="absolute inset-[18px] sm:inset-[22px] md:inset-[18px] overflow-hidden hero-avatar-clip">
         <div className="absolute inset-0 bg-[var(--bg-secondary)]" />
 
         {imageSrc ? (
@@ -126,7 +138,7 @@ const HeroAvatar = ({ imageSrc, fallbackEmoji = '👨‍💻' }: HeroAvatarProps
 
       {/* ── Primary rotating arcs ── */}
       <motion.div
-        className="absolute inset-[12px] md:inset-[8px] pointer-events-none"
+        className="absolute inset-[10px] sm:inset-[12px] md:inset-[8px] pointer-events-none"
         animate={{ rotate: 360 }}
         transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
       >
@@ -138,7 +150,7 @@ const HeroAvatar = ({ imageSrc, fallbackEmoji = '👨‍💻' }: HeroAvatarProps
 
       {/* ── Counter-rotating dashed arcs ── */}
       <motion.div
-        className="absolute inset-[6px] md:inset-[2px] pointer-events-none"
+        className="absolute inset-[4px] sm:inset-[6px] md:inset-[2px] pointer-events-none"
         animate={{ rotate: -360 }}
         transition={{ duration: 28, repeat: Infinity, ease: 'linear' }}
       >
@@ -150,7 +162,7 @@ const HeroAvatar = ({ imageSrc, fallbackEmoji = '👨‍💻' }: HeroAvatarProps
 
       {/* ── Breathing glow ring ── */}
       <motion.div
-        className="absolute inset-[18px] md:inset-[14px] pointer-events-none rounded-full"
+        className="absolute inset-[14px] sm:inset-[18px] md:inset-[14px] pointer-events-none rounded-full"
         style={{ border: '1px solid var(--text-primary)' }}
         animate={{ opacity: [0.05, 0.12, 0.05], scale: [0.99, 1.01, 0.99] }}
         transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
