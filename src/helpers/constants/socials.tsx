@@ -1,17 +1,8 @@
-/* ──────────────────────────────────────────
-   Social Links
-   Add/remove social platforms here.
-   ────────────────────────────────────────── */
+/* ── Social Links ──────────────────────────── */
 
 import { FiGithub, FiLinkedin, FiInstagram, FiYoutube } from 'react-icons/fi'
 import { BsDiscord } from 'react-icons/bs'
-import type { ReactNode } from 'react'
-
-export interface SocialLink {
-  icon: ReactNode
-  href: string
-  label: string
-}
+import type { SocialLink } from '../interfaces'
 
 export const socialLinks: SocialLink[] = [
   { icon: <FiGithub />, href: 'https://github.com/Prag-deesh', label: 'GitHub' },

@@ -1,20 +1,14 @@
-/* ──────────────────────────────────────────
-   Qualification / Timeline
-   Update your education and experience here.
-   ────────────────────────────────────────── */
+/* ── Qualification / Timeline ──────────────── */
 
-export interface TimelineItem {
-  title: string
-  subtitle: string
-  period: string
-}
+import type { TimelineItem } from '../interfaces'
 
 export const education: TimelineItem[] = [
-  { title: '10th Standard', subtitle: 'The BVB School', period: '2018' },
-  { title: '12th Standard', subtitle: 'CS Academy', period: '2018 – 2020' },
-  { title: 'B.Tech Computer Science', subtitle: 'Kumaraguru College of Technology', period: '2020 – 2024' },
+  { title: 'B.E. Information Science', subtitle: 'Kumaraguru College of Technology, Coimbatore', period: '2020 – 2024' },
+  { title: '11th & 12th (CBSE)', subtitle: 'CS Academy, Erode', period: '2018 – 2020' },
+  { title: 'LKG – 10th (CBSE)', subtitle: 'The BVB School, Erode', period: '2006 – 2018' },
 ]
 
 export const experience: TimelineItem[] = [
-  { title: 'Fresher', subtitle: 'Looking forward to exciting opportunities', period: 'Present' },
+  { title: 'Software Engineer', subtitle: 'Ford Motor Private Limited, Chennai', period: '2024 – Present' },
+  { title: 'Project Trainee (6 months)', subtitle: 'Ford Motor Private Limited, Chennai', period: '2024' },
 ]

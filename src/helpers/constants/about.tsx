@@ -1,19 +1,11 @@
-/* ──────────────────────────────────────────
-   About Stats
-   Update the stats cards shown in About section.
-   ────────────────────────────────────────── */
+/* ── About Stats ───────────────────────────── */
 
-import type { ReactNode } from 'react'
-import { HiOutlineBriefcase, HiOutlineAcademicCap, HiOutlineCode } from 'react-icons/hi'
-
-export interface Stat {
-  icon: ReactNode
-  value: string
-  label: string
-}
+import { HiOutlineBriefcase, HiOutlineAcademicCap, HiOutlineCode, HiOutlineSparkles } from 'react-icons/hi'
+import type { Stat } from '../interfaces'
 
 export const aboutStats: Stat[] = [
-  { icon: <HiOutlineCode />, value: '8+', label: 'Projects' },
-  { icon: <HiOutlineBriefcase />, value: '5+', label: 'Domains' },
-  { icon: <HiOutlineAcademicCap />, value: 'KCT', label: 'B.Tech' },
+  { icon: <HiOutlineBriefcase />, value: 'Ford', label: 'Web Developer' },
+  { icon: <HiOutlineAcademicCap />, value: 'B.E.', label: 'KCT Graduate' },
+  { icon: <HiOutlineCode />, value: '9+', label: 'College Projects' },
+  { icon: <HiOutlineSparkles />, value: '>_', label: 'Vibe Coder' },
 ]

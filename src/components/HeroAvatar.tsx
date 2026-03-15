@@ -1,48 +1,57 @@
-/**
- * HeroAvatar — CSS + Framer Motion animated profile visual.
- * Morphing geometric clip-path, grid overlay, scan line,
- * orbiting dots, corner bracket HUD — all matching the
- * sharp monochrome plexus theme.
- */
 import { motion } from 'framer-motion'
+import { personalInfo } from '../helpers/constants'
+import type { HeroAvatarProps } from '../helpers/interfaces'
 
-interface Props {
-  imageSrc?: string
-  fallbackEmoji?: string
-}
-
-/* 6 orbiting dots at different radii & speeds */
+/* Orbiting dots — 3 rings at different speeds & sizes */
 const orbitDots = [
-  { r: 140, speed: 12, size: 4, delay: 0 },
-  { r: 140, speed: 12, size: 3, delay: 4 },
-  { r: 155, speed: 18, size: 3, delay: 1 },
-  { r: 155, speed: 18, size: 2.5, delay: 7 },
-  { r: 125, speed: 25, size: 2, delay: 3 },
-  { r: 125, speed: 25, size: 2, delay: 13 },
+  /* Inner ring — fast, small */
+  { r: 155, speed: 12, size: 4, delay: 0 },
+  { r: 155, speed: 12, size: 3, delay: 6 },
+  /* Mid ring — medium */
+  { r: 175, speed: 18, size: 5, delay: 1 },
+  { r: 175, speed: 18, size: 4, delay: 9 },
+  { r: 175, speed: 18, size: 3, delay: 4 },
+  /* Outer ring — slow, large */
+  { r: 195, speed: 26, size: 3, delay: 2 },
+  { r: 195, speed: 26, size: 2.5, delay: 13 },
+  { r: 195, speed: 26, size: 2.5, delay: 20 },
 ]
 
-const HeroAvatar = ({ imageSrc, fallbackEmoji = '👨‍💻' }: Props) => {
+const HeroAvatar = ({ imageSrc, fallbackEmoji = '👨‍💻' }: HeroAvatarProps) => {
   return (
-    <div className="hero-avatar-wrap relative w-[300px] h-[300px] md:w-[340px] md:h-[340px]">
+    <div className="hero-avatar-wrap relative w-[320px] h-[320px] md:w-[370px] md:h-[370px]">
 
-      {/* ── Corner brackets (HUD) ── */}
+      {/* ── Corner brackets + node dots ── */}
       <div className="absolute inset-0 pointer-events-none">
-        {/* TL */}
-        <span className="absolute top-0 left-0 w-8 h-8 border-t border-l border-[var(--text-primary)] opacity-15" />
-        {/* TR */}
-        <span className="absolute top-0 right-0 w-8 h-8 border-t border-r border-[var(--text-primary)] opacity-15" />
-        {/* BL */}
-        <span className="absolute bottom-0 left-0 w-8 h-8 border-b border-l border-[var(--text-primary)] opacity-15" />
-        {/* BR */}
-        <span className="absolute bottom-0 right-0 w-8 h-8 border-b border-r border-[var(--text-primary)] opacity-15" />
+        <span className="absolute top-0 left-0 w-8 h-px bg-[var(--text-primary)] opacity-35" />
+        <span className="absolute top-0 left-0 w-px h-8 bg-[var(--text-primary)] opacity-35" />
+        <span className="absolute top-[-2px] left-[-2px] w-[5px] h-[5px] bg-[var(--text-primary)] opacity-45" />
+
+        <span className="absolute top-0 right-0 w-8 h-px bg-[var(--text-primary)] opacity-35" />
+        <span className="absolute top-0 right-0 w-px h-8 bg-[var(--text-primary)] opacity-35" />
+        <span className="absolute top-[-2px] right-[-2px] w-[5px] h-[5px] bg-[var(--text-primary)] opacity-45" />
+
+        <span className="absolute bottom-0 left-0 w-8 h-px bg-[var(--text-primary)] opacity-35" />
+        <span className="absolute bottom-0 left-0 w-px h-8 bg-[var(--text-primary)] opacity-35" />
+        <span className="absolute bottom-[-2px] left-[-2px] w-[5px] h-[5px] bg-[var(--text-primary)] opacity-45" />
+
+        <span className="absolute bottom-0 right-0 w-8 h-px bg-[var(--text-primary)] opacity-35" />
+        <span className="absolute bottom-0 right-0 w-px h-8 bg-[var(--text-primary)] opacity-35" />
+        <span className="absolute bottom-[-2px] right-[-2px] w-[5px] h-[5px] bg-[var(--text-primary)] opacity-45" />
       </div>
 
-      {/* ── Dashed orbit rings ── */}
+      {/* ── Pulsing orbit rings ── */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-        <div className="absolute w-[280px] h-[280px] md:w-[310px] md:h-[310px] border border-dashed border-[var(--text-primary)] opacity-[0.06]"
-          style={{ clipPath: 'circle(50%)' }} />
-        <div className="absolute w-[250px] h-[250px] md:w-[280px] md:h-[280px] border border-dashed border-[var(--text-primary)] opacity-[0.04]"
-          style={{ clipPath: 'circle(50%)' }} />
+        <motion.div
+          className="absolute w-[310px] h-[310px] md:w-[360px] md:h-[360px] border border-dashed border-[var(--text-primary)] rounded-full"
+          animate={{ opacity: [0.06, 0.1, 0.06], scale: [1, 1.02, 1] }}
+          transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+        />
+        <motion.div
+          className="absolute w-[280px] h-[280px] md:w-[330px] md:h-[330px] border border-dashed border-[var(--text-primary)] rounded-full"
+          animate={{ opacity: [0.04, 0.07, 0.04], scale: [1, 0.98, 1] }}
+          transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
+        />
       </div>
 
       {/* ── Orbiting dots ── */}
@@ -53,47 +62,42 @@ const HeroAvatar = ({ imageSrc, fallbackEmoji = '👨‍💻' }: Props) => {
           style={{
             width: dot.size,
             height: dot.size,
-            background: 'var(--text-primary)',
-            opacity: 0.35,
             top: '50%',
             left: '50%',
             marginTop: -dot.size / 2,
             marginLeft: -dot.size / 2,
           }}
-          animate={{
-            rotate: [0, 360],
-          }}
-          transition={{
-            duration: dot.speed,
-            repeat: Infinity,
-            ease: 'linear',
-            delay: dot.delay,
-          }}
+          animate={{ rotate: [0, 360] }}
+          transition={{ duration: dot.speed, repeat: Infinity, ease: 'linear', delay: dot.delay }}
         >
-          <div
+          <motion.div
             style={{
               position: 'absolute',
               width: dot.size,
               height: dot.size,
+              borderRadius: '50%',
               background: 'var(--text-primary)',
               top: -dot.r,
               left: 0,
             }}
+            animate={{ opacity: [0.3, 0.6, 0.3] }}
+            transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut', delay: dot.delay * 0.3 }}
           />
         </motion.div>
       ))}
 
-      {/* ── Main image container with morph clip-path ── */}
-      <div className="absolute inset-[24px] md:inset-[20px] overflow-hidden hero-avatar-clip">
-        {/* Background */}
+      {/* ── Main image container ── */}
+      <div className="absolute inset-[22px] md:inset-[18px] overflow-hidden hero-avatar-clip">
         <div className="absolute inset-0 bg-[var(--bg-secondary)]" />
 
-        {/* Photo or fallback */}
         {imageSrc ? (
-          <img
+          <motion.img
             src={imageSrc}
-            alt="Profile"
+            alt={personalInfo.name}
             className="relative z-10 w-full h-full object-cover"
+            initial={{ scale: 1.1 }}
+            animate={{ scale: 1 }}
+            transition={{ duration: 1.5, ease: 'easeOut' }}
           />
         ) : (
           <div className="relative z-10 w-full h-full flex items-center justify-center text-8xl select-none">
@@ -105,10 +109,7 @@ const HeroAvatar = ({ imageSrc, fallbackEmoji = '👨‍💻' }: Props) => {
         <div
           className="absolute inset-0 z-20 pointer-events-none opacity-[0.03]"
           style={{
-            backgroundImage: `
-              linear-gradient(var(--text-primary) 1px, transparent 1px),
-              linear-gradient(90deg, var(--text-primary) 1px, transparent 1px)
-            `,
+            backgroundImage: "linear-gradient(var(--text-primary) 1px, transparent 1px), linear-gradient(90deg, var(--text-primary) 1px, transparent 1px)",
             backgroundSize: '20px 20px',
           }}
         />
@@ -116,70 +117,50 @@ const HeroAvatar = ({ imageSrc, fallbackEmoji = '👨‍💻' }: Props) => {
         {/* Scan line */}
         <div className="absolute inset-0 z-30 pointer-events-none hero-scanline" />
 
-        {/* Vignette edge */}
+        {/* Vignette */}
         <div
           className="absolute inset-0 z-20 pointer-events-none"
-          style={{
-            background: 'radial-gradient(circle at center, transparent 50%, var(--bg-primary) 100%)',
-            opacity: 0.4,
-          }}
+          style={{ background: 'radial-gradient(circle at center, transparent 35%, var(--bg-primary) 100%)', opacity: 0.55 }}
         />
-
-        {/* Border */}
-        <div className="absolute inset-0 z-20 border border-[var(--text-primary)] opacity-10 pointer-events-none hero-avatar-clip" />
       </div>
 
-      {/* ── Rotating accent arcs ── */}
+      {/* ── Primary rotating arcs ── */}
       <motion.div
-        className="absolute inset-[14px] md:inset-[10px] pointer-events-none"
+        className="absolute inset-[12px] md:inset-[8px] pointer-events-none"
         animate={{ rotate: 360 }}
         transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
       >
         <svg viewBox="0 0 300 300" className="w-full h-full" fill="none">
-          <path
-            d="M 150 10 A 140 140 0 0 1 240 40"
-            stroke="var(--text-primary)"
-            strokeWidth="1.5"
-            opacity="0.2"
-          />
-          <path
-            d="M 150 290 A 140 140 0 0 1 60 260"
-            stroke="var(--text-primary)"
-            strokeWidth="1.5"
-            opacity="0.2"
-          />
+          <path d="M 150 6 A 144 144 0 0 1 260 50" stroke="var(--text-primary)" strokeWidth="1.5" opacity="0.25" />
+          <path d="M 150 294 A 144 144 0 0 1 40 250" stroke="var(--text-primary)" strokeWidth="1.5" opacity="0.25" />
         </svg>
       </motion.div>
 
-      {/* ── Counter-rotating arc ── */}
+      {/* ── Counter-rotating dashed arcs ── */}
       <motion.div
-        className="absolute inset-[8px] md:inset-[4px] pointer-events-none"
+        className="absolute inset-[6px] md:inset-[2px] pointer-events-none"
         animate={{ rotate: -360 }}
-        transition={{ duration: 30, repeat: Infinity, ease: 'linear' }}
+        transition={{ duration: 28, repeat: Infinity, ease: 'linear' }}
       >
         <svg viewBox="0 0 300 300" className="w-full h-full" fill="none">
-          <path
-            d="M 40 100 A 140 140 0 0 1 40 200"
-            stroke="var(--text-primary)"
-            strokeWidth="1"
-            opacity="0.1"
-            strokeDasharray="4 8"
-          />
+          <path d="M 30 80 A 148 148 0 0 1 30 220" stroke="var(--text-primary)" strokeWidth="1" opacity="0.12" strokeDasharray="5 10" />
+          <path d="M 270 80 A 148 148 0 0 0 270 220" stroke="var(--text-primary)" strokeWidth="1" opacity="0.12" strokeDasharray="5 10" />
         </svg>
       </motion.div>
 
-      {/* ── HUD labels ── */}
+      {/* ── Breathing glow ring ── */}
+      <motion.div
+        className="absolute inset-[18px] md:inset-[14px] pointer-events-none rounded-full"
+        style={{ border: '1px solid var(--text-primary)' }}
+        animate={{ opacity: [0.05, 0.12, 0.05], scale: [0.99, 1.01, 0.99] }}
+        transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+      />
+
+      {/* ── Label ── */}
       <span
-        className="absolute bottom-2 left-7 text-[8px] uppercase tracking-[0.25em] text-[var(--text-muted)] opacity-40 font-medium pointer-events-none select-none"
-        style={{ fontFamily: 'var(--font-heading)' }}
+        className="absolute bottom-0 left-1/2 -translate-x-1/2 text-[7px] uppercase tracking-[0.3em] text-[var(--text-muted)] opacity-30 font-medium pointer-events-none select-none font-heading"
       >
-        sys.render
-      </span>
-      <span
-        className="absolute top-2 right-7 text-[8px] uppercase tracking-[0.25em] text-[var(--text-muted)] opacity-40 font-medium pointer-events-none select-none"
-        style={{ fontFamily: 'var(--font-heading)' }}
-      >
-        node.active
+        {personalInfo.name.toLowerCase()}
       </span>
     </div>
   )

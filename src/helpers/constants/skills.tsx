@@ -1,59 +1,62 @@
-/* ──────────────────────────────────────────
-   Skills
-   Add/remove skills or categories here.
-   Each skill needs a name and an icon
-   from react-icons.
-   ────────────────────────────────────────── */
+/* ── Skills ─────────────────────────────────── */
 
-import type { ReactNode } from 'react'
 import {
-  SiHtml5, SiCss, SiJavascript, SiReact, SiNodedotjs,
-  SiMongodb, SiPython, SiFlutter,
-  SiGit, SiFirebase, SiBlender, SiFigma,
+  SiHtml5, SiJavascript, SiTypescript, SiReact, SiNodedotjs, SiNextdotjs,
+  SiPython, SiAndroidstudio, SiGithub, SiFirebase, SiCplusplus,
+  SiSpringboot, SiFramer, SiOpenai, SiUnity,
 } from 'react-icons/si'
-import { HiOutlineLightBulb, HiOutlineUserGroup, HiOutlineClock, HiOutlineChat } from 'react-icons/hi'
-import { BsBrush, BsPalette } from 'react-icons/bs'
+import {
+  HiOutlineLightBulb, HiOutlineUserGroup, HiOutlineCube,
+  HiOutlineLightningBolt, HiOutlineSearch, HiOutlineRefresh, HiOutlineBadgeCheck,
+  HiOutlineKey, HiOutlineLockClosed, HiOutlineFingerPrint,
+} from 'react-icons/hi'
+import { BsBrush, BsPalette, BsHeadsetVr, BsController } from 'react-icons/bs'
+import { FaJava } from 'react-icons/fa'
+import type { SkillCategory, SoftSkill } from '../interfaces'
 
-export interface Skill {
-  name: string
-  icon: ReactNode
+export const primarySkills: SkillCategory = {
+  title: 'Web Development',
+  featured: true,
+  skills: [
+    { name: 'React', icon: <SiReact /> },
+    { name: 'Next.js', icon: <SiNextdotjs /> },
+    { name: 'TypeScript', icon: <SiTypescript /> },
+    { name: 'JavaScript', icon: <SiJavascript /> },
+    { name: 'Prompting & Agents', icon: <SiOpenai /> },
+    { name: 'HTML & CSS', icon: <SiHtml5 /> },
+    { name: 'GitHub', icon: <SiGithub /> },
+    { name: 'Node.js', icon: <SiNodedotjs /> },
+    { name: 'Spring Boot', icon: <SiSpringboot /> },
+    { name: 'Architecture', icon: <HiOutlineCube /> },
+    { name: 'Animations', icon: <SiFramer /> },
+    { name: 'Optimization', icon: <HiOutlineLightningBolt /> },
+    { name: 'Analytics & SEO', icon: <HiOutlineSearch /> },
+  ],
 }
 
-export interface SkillCategory {
-  title: string
-  skills: Skill[]
-}
-
-export interface SoftSkill {
-  name: string
-  icon: ReactNode
-}
-
-export const skillCategories: SkillCategory[] = [
+export const secondarySkills: SkillCategory[] = [
   {
-    title: 'Web Development',
+    title: 'Coding',
     skills: [
-      { name: 'HTML & CSS', icon: <SiHtml5 /> },
-      { name: 'JavaScript', icon: <SiJavascript /> },
-      { name: 'React', icon: <SiReact /> },
-      { name: 'Node.js', icon: <SiNodedotjs /> },
-      { name: 'MongoDB', icon: <SiMongodb /> },
+      { name: 'Java', icon: <FaJava /> },
+      { name: 'C++', icon: <SiCplusplus /> },
+      { name: 'Python', icon: <SiPython /> },
     ],
   },
   {
-    title: 'Mobile Development',
+    title: 'Mobile',
     skills: [
-      { name: 'Flutter', icon: <SiFlutter /> },
-      { name: 'React Native', icon: <SiReact /> },
+      { name: 'Android Studio', icon: <SiAndroidstudio /> },
       { name: 'Firebase', icon: <SiFirebase /> },
     ],
   },
   {
-    title: 'Languages & Tools',
+    title: 'VR & Game',
     skills: [
-      { name: 'Python', icon: <SiPython /> },
-      { name: 'Git', icon: <SiGit /> },
-      { name: 'CSS', icon: <SiCss /> },
+      { name: 'Virtual Reality', icon: <BsHeadsetVr /> },
+      { name: 'Game Dev', icon: <BsController /> },
+      { name: 'Code Animations', icon: <SiFramer /> },
+      { name: 'Unity', icon: <SiUnity /> },
     ],
   },
   {
@@ -61,15 +64,22 @@ export const skillCategories: SkillCategory[] = [
     skills: [
       { name: 'Photoshop', icon: <BsBrush /> },
       { name: 'Illustrator', icon: <BsPalette /> },
-      { name: 'Blender', icon: <SiBlender /> },
-      { name: 'Figma', icon: <SiFigma /> },
+    ],
+  },
+  {
+    title: 'Cyber',
+    skills: [
+      { name: 'Cryptography', icon: <HiOutlineKey /> },
+      { name: 'Encryption', icon: <HiOutlineLockClosed /> },
+      { name: 'Digital Signatures', icon: <HiOutlineFingerPrint /> },
     ],
   },
 ]
 
 export const softSkills: SoftSkill[] = [
-  { name: 'Problem Solving', icon: <HiOutlineLightBulb /> },
-  { name: 'Team Work', icon: <HiOutlineUserGroup /> },
-  { name: 'Time Management', icon: <HiOutlineClock /> },
-  { name: 'Communication', icon: <HiOutlineChat /> },
+  { name: 'Critical Thinking', icon: <HiOutlineLightBulb /> },
+  { name: 'Adaptability', icon: <HiOutlineRefresh /> },
+  { name: 'Fast Learner', icon: <HiOutlineLightningBolt /> },
+  { name: 'Collaboration', icon: <HiOutlineUserGroup /> },
+  { name: 'Ownership', icon: <HiOutlineBadgeCheck /> },
 ]

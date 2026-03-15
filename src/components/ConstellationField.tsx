@@ -1,10 +1,5 @@
-/**
- * ConstellationField — Animated particle background with mouse interaction.
- *
- * Particles float, connect with lines, and react to mouse cursor.
- * Pure Canvas 2D — no dependencies beyond React.
- */
 import { useEffect, useRef } from 'react'
+import type { ConstellationFieldProps } from '../helpers/interfaces'
 
 interface Particle {
   x: number; y: number
@@ -12,12 +7,7 @@ interface Particle {
   size: number; phase: number
 }
 
-interface Props {
-  theme?: 'dark' | 'light'
-  className?: string
-}
-
-const ConstellationField = ({ theme = 'dark', className = '' }: Props) => {
+const ConstellationField = ({ theme = 'dark', className = '' }: ConstellationFieldProps) => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const themeRef = useRef(theme)
   const mouseRef = useRef({ x: -9999, y: -9999 })
@@ -88,9 +78,10 @@ const ConstellationField = ({ theme = 'dark', className = '' }: Props) => {
       time += 0.01
 
       const isDark = themeRef.current === 'dark'
-      const bgR = isDark ? 14 : 249
-      const bgG = isDark ? 16 : 250
-      const bgB = isDark ? 22 : 252
+      // Match exactly with CSS --bg-primary: dark = hsl(0,0%,7%) = rgb(18,18,18), light = hsl(0,0%,98%) = rgb(250,250,250)
+      const bgR = isDark ? 18 : 250
+      const bgG = isDark ? 18 : 250
+      const bgB = isDark ? 18 : 250
 
       // Trail: semi-transparent bg fill creates ghosting
       ctx.fillStyle = `rgba(${bgR},${bgG},${bgB},0.15)`

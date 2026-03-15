@@ -1,22 +1,36 @@
-/**
- * GradientBlobs — Large, soft animated gradient blobs for background depth.
- * Pure CSS + framer-motion. No WebGL needed.
- */
 import { motion } from 'framer-motion'
+import type { GradientBlobsProps } from '../helpers/interfaces'
 
-const blobs = [
-  { id: 1, size: 500, x: '-5%',  y: '-10%', color1: '#888888', color2: '#666666', duration: 22, delay: 0 },
-  { id: 2, size: 400, x: '60%',  y: '10%',  color1: '#999999', color2: '#777777', duration: 26, delay: 3 },
-  { id: 3, size: 350, x: '30%',  y: '50%',  color1: '#777777', color2: '#999999', duration: 20, delay: 1 },
-  { id: 4, size: 300, x: '75%',  y: '60%',  color1: '#888888', color2: '#aaaaaa', duration: 24, delay: 5 },
+const blobPositions = [
+  { id: 1, size: 500, x: '-5%',  y: '-10%', duration: 22, delay: 0 },
+  { id: 2, size: 400, x: '60%',  y: '10%',  duration: 26, delay: 3 },
+  { id: 3, size: 350, x: '30%',  y: '50%',  duration: 20, delay: 1 },
+  { id: 4, size: 300, x: '75%',  y: '60%',  duration: 24, delay: 5 },
 ]
 
-const GradientBlobs = ({ theme }: { theme: 'light' | 'dark' }) => {
-  const opacity = theme === 'dark' ? 0.15 : 0.08
+const GradientBlobs = ({ theme }: GradientBlobsProps) => {
+  const isDark = theme === 'dark'
+  const opacity = isDark ? 0.15 : 0.12
+  // Dark mode: slightly lighter than bg to create subtle bright patches
+  // Light mode: slightly darker than bg to create subtle shadow patches
+  // Both create visible depth without clashing
+  const colors = isDark
+    ? [
+        { c1: '#3a3a3a', c2: '#2a2a2a' },
+        { c1: '#404040', c2: '#303030' },
+        { c1: '#353535', c2: '#3e3e3e' },
+        { c1: '#383838', c2: '#444444' },
+      ]
+    : [
+        { c1: '#888888', c2: '#666666' },
+        { c1: '#999999', c2: '#777777' },
+        { c1: '#777777', c2: '#999999' },
+        { c1: '#888888', c2: '#aaaaaa' },
+      ]
 
   return (
     <div className="fixed inset-0 pointer-events-none overflow-hidden" style={{ zIndex: 1 }} aria-hidden>
-      {blobs.map((blob) => (
+      {blobPositions.map((blob, i) => (
         <motion.div
           key={blob.id}
           style={{
@@ -26,7 +40,7 @@ const GradientBlobs = ({ theme }: { theme: 'light' | 'dark' }) => {
             width: blob.size,
             height: blob.size,
             borderRadius: '50%',
-            background: `radial-gradient(circle at 30% 30%, ${blob.color1}, ${blob.color2}, transparent 70%)`,
+            background: `radial-gradient(circle at 30% 30%, ${colors[i].c1}, ${colors[i].c2}, transparent 70%)`,
             filter: 'blur(80px)',
             opacity,
           }}

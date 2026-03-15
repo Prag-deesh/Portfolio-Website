@@ -1,25 +1,15 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Pragadeesh",
+  "name": "Pragadeesh — Software Engineer Portfolio",
   "icons": [
     {
-      "src": "prag.jpg",
-      "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/jpg"
-    },
-    {
-      "src": "prag.jpg",
-      "type": "image/jpg",
-      "sizes": "192x192"
-    },
-    {
-      "src": "prag.jpg",
-      "type": "image/jpg",
-      "sizes": "512x512"
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
     }
   ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "theme_color": "#121212",
+  "background_color": "#fafafa"
 }

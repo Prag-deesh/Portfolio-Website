@@ -1,14 +1,13 @@
-/** Re-export all constants from a single entry point */
+/* ── Constants barrel export ───────────────── */
+
 export { personalInfo } from './personal'
 export { navLinks } from './navigation'
-export type { NavLink } from './navigation'
 export { socialLinks } from './socials'
-export type { SocialLink } from './socials'
-export { skillCategories, softSkills } from './skills'
-export type { Skill, SkillCategory, SoftSkill } from './skills'
-export { projects, projectCategories } from './projects'
-export type { Project } from './projects'
+export { primarySkills, secondarySkills, softSkills } from './skills'
+export { companyProjects, collegeProjects, collegeCategories } from './projects'
 export { education, experience } from './qualification'
-export type { TimelineItem } from './qualification'
 export { aboutStats } from './about'
-export type { Stat } from './about'
+export {
+  sections, contactLabels, footerLinks, footerLabels, homeLabels, aboutLabels, skillsLabels,
+  portfolioLabels, portfolioTabs, qualificationTabs,
+} from './sections'

@@ -1,37 +1,34 @@
 import { motion } from 'framer-motion'
-import { personalInfo, socialLinks } from '../helpers/constants'
-import { titleHighlight } from '../helpers/styles'
+import { personalInfo, socialLinks, footerLinks, footerLabels } from '../helpers/constants'
+import {
+  footerSection, footerInner, footerMotion, footerLogo, footerNav, footerNavLink,
+  footerSocials, footerSocialLink, footerDivider, footerCopy,
+} from '../helpers/styles/components'
 
 const Footer = () => {
   const year = new Date().getFullYear()
 
   return (
-    <footer className="py-12 bg-[var(--bg-secondary)]">
-      <div className="max-w-[1100px] mx-auto px-6">
+    <footer className={footerSection}>
+      <div className={footerInner}>
         <motion.div
-          className="flex flex-col items-center gap-6"
+          className={footerMotion}
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
         >
-          <a href="#home" className={`text-xl font-bold ${titleHighlight}`} style={{ fontFamily: 'var(--font-heading)' }}>
-            {personalInfo.name}
-          </a>
+          <a href="#home" className={footerLogo}>{personalInfo.name}</a>
 
-          <nav className="flex gap-8 flex-wrap justify-center">
-            {['About', 'Skills', 'Portfolio', 'Contact'].map((link) => (
-              <a
-                key={link}
-                href={`#${link.toLowerCase()}`}
-                className="text-xs uppercase tracking-widest text-[var(--text-secondary)] font-medium hover:text-[var(--text-primary)] transition-colors duration-150"
-              >
+          <nav className={footerNav}>
+            {footerLinks.map((link) => (
+              <a key={link} href={`#${link.toLowerCase()}`} className={footerNavLink}>
                 {link}
               </a>
             ))}
           </nav>
 
-          <div className="flex gap-3">
+          <div className={footerSocials}>
             {socialLinks.map((link) => (
               <a
                 key={link.label}
@@ -39,17 +36,17 @@ const Footer = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={link.label}
-                className="plexus-border plexus-border-sm flex items-center justify-center w-9 h-9 text-base text-[var(--text-secondary)] bg-[var(--bg-card)] hover:text-[var(--bg-primary)] hover:bg-[var(--text-primary)] hover:border-transparent! hover:-translate-y-0.5 transition-all duration-250"
+                className={footerSocialLink}
               >
                 {link.icon}
               </a>
             ))}
           </div>
 
-          <div className="w-full max-w-[400px] h-px bg-[var(--border-glass)]" />
+          <div className={footerDivider} />
 
-          <p className="text-xs text-[var(--text-muted)]">
-            &copy; {year} {personalInfo.name}. All rights reserved.
+          <p className={footerCopy}>
+            &copy; {year} {personalInfo.name}. {footerLabels.copyright}
           </p>
         </motion.div>
       </div>

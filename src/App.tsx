@@ -22,22 +22,20 @@ function App() {
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme)
     localStorage.setItem('theme', theme)
+    // Sync theme-color meta tag for mobile browsers
+    const color = theme === 'dark' ? '#121212' : '#fafafa'
+    document.querySelector('meta[name="theme-color"][media*="light"]')?.setAttribute('content', color)
+    document.querySelector('meta[name="theme-color"][media*="dark"]')?.setAttribute('content', color)
   }, [theme])
 
   const toggleTheme = () => setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'))
 
   return (
     <>
-      {/* Layer 0: Constellation canvas (opaque, draws its own bg + particles) */}
       <ConstellationField theme={theme} />
-
-      {/* Layer 1: Gradient blobs floating above canvas */}
       <GradientBlobs theme={theme} />
-
-      {/* Layer 2: Header (z-50 via own styles) */}
       <Header theme={theme} toggleTheme={toggleTheme} />
 
-      {/* Layer 3: Main content — transparent bg so particles show through */}
       <main className="relative z-10">
         <Home />
         <SectionReveal parallaxY={30}>
@@ -56,6 +54,7 @@ function App() {
           <Contact />
         </SectionReveal>
       </main>
+
       <Footer />
       <ScrollUp />
     </>
