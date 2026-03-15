@@ -37,10 +37,10 @@ const Qualification = () => {
             <button
               key={t.key}
               onClick={() => setTab(t.key)}
-              className={`flex items-center gap-2 px-6 py-3 text-xs font-semibold uppercase tracking-widest border transition-all duration-250
+              className={`plexus-border plexus-border-sm flex items-center gap-2 px-6 py-3 text-xs font-semibold uppercase tracking-widest transition-all duration-250
                 ${tab === t.key
-                  ? 'bg-[var(--text-primary)] text-[var(--bg-primary)] border-transparent'
-                  : 'bg-[var(--bg-card)] text-[var(--text-muted)] border-[var(--border-glass)] hover:text-[var(--text-primary)] hover:border-[var(--text-primary)]'
+                  ? 'bg-[var(--text-primary)] text-[var(--bg-primary)] border-transparent!'
+                  : 'bg-[var(--bg-card)] text-[var(--text-muted)] hover:text-[var(--text-primary)]'
                 }`}
             >
               <span className="text-lg">{t.icon}</span>

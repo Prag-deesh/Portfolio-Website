@@ -39,7 +39,7 @@ const Footer = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={link.label}
-                className="flex items-center justify-center w-9 h-9 text-base text-[var(--text-secondary)] bg-[var(--bg-card)] border border-[var(--border-glass)] hover:text-[var(--bg-primary)] hover:bg-[var(--text-primary)] hover:border-transparent hover:-translate-y-0.5 transition-all duration-250"
+                className="plexus-border plexus-border-sm flex items-center justify-center w-9 h-9 text-base text-[var(--text-secondary)] bg-[var(--bg-card)] hover:text-[var(--bg-primary)] hover:bg-[var(--text-primary)] hover:border-transparent! hover:-translate-y-0.5 transition-all duration-250"
               >
                 {link.icon}
               </a>

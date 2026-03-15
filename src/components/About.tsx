@@ -34,10 +34,10 @@ const About = () => {
               className="relative w-64 h-72"
             >
               {/* CUSTOMIZE: Replace span with <img src="/your-photo.webp" className="w-full h-full object-cover relative z-10" /> */}
-              <div className="w-full h-full bg-[var(--bg-secondary)] flex items-center justify-center text-7xl relative z-10 overflow-hidden">
+              <div className="plexus-border w-full h-full bg-[var(--bg-secondary)] flex items-center justify-center text-7xl relative z-10 overflow-hidden">
                 👨‍💻
               </div>
-              <div className="absolute -inset-2 bg-[var(--text-primary)] opacity-15" />
+              <div className="absolute -inset-2 border border-[var(--text-primary)] opacity-[0.06]" />
             </motion.div>
           </motion.div>
 

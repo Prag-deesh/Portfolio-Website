@@ -100,21 +100,21 @@ const Contact = () => {
                 name="name"
                 placeholder="Your Name"
                 required
-                className="w-full px-5 py-3 border border-[var(--border-glass)] bg-[var(--bg-card)] text-[var(--text-primary)] text-xs placeholder:text-[var(--text-muted)] focus:border-[var(--text-primary)] outline-none transition-colors duration-150"
+                className="plexus-border plexus-border-sm w-full px-5 py-3 bg-[var(--bg-card)] text-[var(--text-primary)] text-xs placeholder:text-[var(--text-muted)] focus:border-[var(--text-primary)]! outline-none transition-colors duration-150"
               />
               <input
                 type="email"
                 name="email"
                 placeholder="Your Email"
                 required
-                className="w-full px-5 py-3 border border-[var(--border-glass)] bg-[var(--bg-card)] text-[var(--text-primary)] text-xs placeholder:text-[var(--text-muted)] focus:border-[var(--text-primary)] outline-none transition-colors duration-150"
+                className="plexus-border plexus-border-sm w-full px-5 py-3 bg-[var(--bg-card)] text-[var(--text-primary)] text-xs placeholder:text-[var(--text-muted)] focus:border-[var(--text-primary)]! outline-none transition-colors duration-150"
               />
               <textarea
                 name="project"
                 placeholder="Your message..."
                 rows={6}
                 required
-                className="w-full px-5 py-3 border border-[var(--border-glass)] bg-[var(--bg-card)] text-[var(--text-primary)] text-xs placeholder:text-[var(--text-muted)] focus:border-[var(--text-primary)] outline-none transition-colors duration-150 resize-y min-h-[120px]"
+                className="plexus-border plexus-border-sm w-full px-5 py-3 bg-[var(--bg-card)] text-[var(--text-primary)] text-xs placeholder:text-[var(--text-muted)] focus:border-[var(--text-primary)]! outline-none transition-colors duration-150 resize-y min-h-[120px]"
               />
               <button
                 type="submit"

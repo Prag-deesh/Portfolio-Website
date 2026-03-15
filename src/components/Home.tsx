@@ -83,7 +83,7 @@ const Home = () => {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3, delay: 0.7 + i * 0.1 }}
-              className="flex items-center justify-center w-10 h-10 bg-[var(--bg-card)] border border-[var(--border-glass)] text-base text-[var(--text-secondary)] hover:text-[var(--bg-primary)] hover:bg-[var(--text-primary)] hover:border-transparent hover:-translate-y-1 transition-all duration-250"
+              className="plexus-border plexus-border-sm flex items-center justify-center w-10 h-10 bg-[var(--bg-card)] text-base text-[var(--text-secondary)] hover:text-[var(--bg-primary)] hover:bg-[var(--text-primary)] hover:border-transparent! hover:-translate-y-1 transition-all duration-250"
             >
               {link.icon}
             </motion.a>

@@ -77,7 +77,7 @@ const Header = ({ theme, toggleTheme }: Props) => {
           <button
             onClick={toggleTheme}
             aria-label="Toggle theme"
-            className="flex items-center justify-center w-9 h-9 text-base text-[var(--text-secondary)] bg-[var(--bg-card)] border border-[var(--border-glass)] hover:text-[var(--text-primary)] hover:border-[var(--text-primary)] transition-all duration-150"
+            className="plexus-border plexus-border-sm flex items-center justify-center w-9 h-9 text-base text-[var(--text-secondary)] bg-[var(--bg-card)] hover:text-[var(--text-primary)] transition-all duration-150"
           >
             <AnimatePresence mode="wait" initial={false}>
               <motion.span
@@ -110,7 +110,7 @@ const Header = ({ theme, toggleTheme }: Props) => {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -16 }}
               transition={{ duration: 0.2 }}
-              className="absolute top-full mt-2 left-6 right-6 bg-[var(--bg-card)] backdrop-blur-xl border border-[var(--border-glass)] shadow-lg p-4 flex flex-col gap-1"
+              className="plexus-border absolute top-full mt-2 left-6 right-6 bg-[var(--bg-card)] backdrop-blur-xl shadow-lg p-4 flex flex-col gap-1"
             >
               {navLinks.map((link) => (
                 <a

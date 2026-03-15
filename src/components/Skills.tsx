@@ -34,7 +34,7 @@ const Skills = () => {
                 {cat.skills.map((skill) => (
                   <div
                     key={skill.name}
-                    className="flex items-center gap-2.5 px-3 py-2 bg-[var(--bg-secondary)] text-xs font-medium hover:bg-[var(--text-primary)] hover:text-[var(--bg-primary)] hover:translate-x-1 transition-all duration-150 group"
+                    className="plexus-border plexus-border-sm flex items-center gap-2.5 px-3 py-2 bg-[var(--bg-secondary)] text-xs font-medium hover:bg-[var(--text-primary)] hover:text-[var(--bg-primary)] hover:translate-x-1 transition-all duration-150 group"
                   >
                     <span className="text-base text-[var(--text-primary)] flex shrink-0 group-hover:text-[var(--bg-primary)] transition-colors duration-150">
                       {skill.icon}
@@ -60,7 +60,7 @@ const Skills = () => {
             {softSkills.map((skill) => (
               <span
                 key={skill.name}
-                className="inline-flex items-center gap-2 px-4 py-2 bg-[var(--bg-card)] border border-[var(--border-glass)] text-xs font-medium text-[var(--text-secondary)] hover:border-[var(--text-primary)] hover:text-[var(--text-primary)] hover:-translate-y-0.5 transition-all duration-250"
+                className="plexus-border plexus-border-sm inline-flex items-center gap-2 px-4 py-2 bg-[var(--bg-card)] text-xs font-medium text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:-translate-y-0.5 transition-all duration-250"
               >
                 <span className="text-base flex">{skill.icon}</span>
                 {skill.name}
