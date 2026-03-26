@@ -3,7 +3,7 @@
 import {
   SiHtml5, SiJavascript, SiTypescript, SiReact, SiNodedotjs, SiNextdotjs,
   SiPython, SiAndroidstudio, SiGithub, SiFirebase, SiCplusplus,
-  SiSpringboot, SiFramer, SiOpenai, SiUnity,
+  SiSpringboot, SiFramer, SiOpenai, SiUnity, SiTailwindcss,
 } from 'react-icons/si'
 import {
   HiOutlineLightBulb, HiOutlineUserGroup, HiOutlineCube,
@@ -24,6 +24,7 @@ export const primarySkills: SkillCategory = {
     { name: 'JavaScript', icon: <SiJavascript /> },
     { name: 'Prompting & Agents', icon: <SiOpenai /> },
     { name: 'HTML & CSS', icon: <SiHtml5 /> },
+    { name: 'Tailwind CSS', icon: <SiTailwindcss /> },
     { name: 'GitHub', icon: <SiGithub /> },
     { name: 'Node.js', icon: <SiNodedotjs /> },
     { name: 'Spring Boot', icon: <SiSpringboot /> },
