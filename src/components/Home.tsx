@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { FiArrowDown } from 'react-icons/fi'
 import { HiOutlineDownload } from 'react-icons/hi'
@@ -10,10 +11,18 @@ import {
 import HeroAvatar from './HeroAvatar'
 
 const Home = () => {
+  const [isMobile, setIsMobile] = useState(false)
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768)
+    check()
+    window.addEventListener('resize', check, { passive: true })
+    return () => window.removeEventListener('resize', check)
+  }, [])
+
   const { scrollY } = useScroll()
-  const textY = useTransform(scrollY, [0, 500], [0, -60])
-  const imageY = useTransform(scrollY, [0, 500], [0, 50])
-  const heroOpacity = useTransform(scrollY, [0, 400], [1, 0.3])
+  const textY = useTransform(scrollY, [0, 500], [0, isMobile ? -15 : -60])
+  const imageY = useTransform(scrollY, [0, 500], [0, isMobile ? 10 : 50])
+  const heroOpacity = useTransform(scrollY, [0, 400], [1, isMobile ? 0.6 : 0.3])
 
   return (
     <section id="home" className={homeSection}>

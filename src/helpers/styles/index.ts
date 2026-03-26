@@ -87,20 +87,20 @@ export const timelineDot = 'absolute -left-[22px] top-6 w-3 h-3 rounded-sm bg-[v
 export const fadeUp = {
   initial: { opacity: 0, y: 24 },
   whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true, margin: '-60px' as const },
+  viewport: { once: true, margin: '-40px' as const },
   transition: { duration: 0.5 },
 }
 
 export const fadeIn = (delay = 0) => ({
   initial: { opacity: 0, y: 30 },
   whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true, margin: '-100px' as const },
+  viewport: { once: true, margin: '-40px' as const },
   transition: { duration: 0.6, delay },
 })
 
 export const slideIn = (direction: 'left' | 'right', delay = 0) => ({
   initial: { opacity: 0, x: direction === 'left' ? -30 : 30 },
   whileInView: { opacity: 1, x: 0 },
-  viewport: { once: true, margin: '-100px' as const },
+  viewport: { once: true, margin: '-40px' as const },
   transition: { duration: 0.5, delay },
 })

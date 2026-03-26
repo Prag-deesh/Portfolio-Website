@@ -18,7 +18,7 @@ const SectionReveal = ({
     return () => window.removeEventListener('resize', check)
   }, [])
 
-  const mobileY = isMobile ? Math.round(parallaxY * 0.3) : parallaxY
+  const mobileY = isMobile ? 0 : parallaxY
   const mobileScale = isMobile ? 1 : scaleFrom
 
   const { scrollYProgress } = useScroll({

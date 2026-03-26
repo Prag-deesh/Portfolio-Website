@@ -36,7 +36,7 @@ function App() {
       <GradientBlobs theme={theme} />
       <Header theme={theme} toggleTheme={toggleTheme} />
 
-      <main className="relative z-10">
+      <main className="relative z-10 overflow-visible">
         <Home />
         <SectionReveal parallaxY={30}>
           <About />

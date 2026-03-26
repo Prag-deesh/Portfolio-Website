@@ -47,7 +47,7 @@ export const workSection = 'py-24'
 export const workTabsWrap = 'flex justify-center gap-3 flex-wrap mb-6'
 export const workTabBtn = 'flex items-center gap-2 px-6 py-3'
 export const workTabIcon = 'text-lg'
-export const workSubFiltersWrap = 'flex justify-center gap-2 flex-wrap mb-12 overflow-hidden'
+export const workSubFiltersWrap = 'flex justify-center gap-2 flex-wrap mb-12'
 export const workSubFilterBtn = 'px-4 py-1.5 text-xs'
 export const workCompanyGrid = 'grid gap-4'
 export const workCollegeGrid = 'grid sm:grid-cols-2 lg:grid-cols-3 gap-6'
@@ -81,8 +81,8 @@ export const qualSubtitle = `${bodyText} mb-2`
 export const qualPeriod = `flex items-center gap-1.5 ${labelSm}`
 
 /* ── Contact ────────────────────────────────── */
-export const contactSection = 'py-24'
-export const contactGrid = 'grid md:grid-cols-[1fr_1.2fr] gap-12'
+export const contactSection = 'py-24 pb-32'
+export const contactGrid = 'grid md:grid-cols-[1fr_1.2fr] gap-8 md:gap-12'
 export const contactHeading = `${headingSm} ${headingFont} mb-6`
 export const contactInfoTitle = 'text-sm font-semibold mb-0.5'
 export const contactInfoValue = 'text-sm text-[var(--text-muted)] break-all'
