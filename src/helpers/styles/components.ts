@@ -6,7 +6,7 @@ import {
 } from './index'
 
 /* ── Home ───────────────────────────────────── */
-export const homeSection = 'relative min-h-screen flex items-center pt-28 overflow-hidden'
+export const homeSection = 'relative min-h-screen flex items-center pt-28 overflow-x-hidden'
 export const homeContainer = `${container} w-full relative z-10`
 export const homeGrid = 'grid md:grid-cols-2 items-center gap-12'
 export const homeHeading = `text-4xl sm:text-5xl md:text-6xl leading-tight mt-2 mb-4 ${titleHighlight}`
