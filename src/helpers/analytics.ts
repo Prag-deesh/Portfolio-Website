@@ -10,7 +10,7 @@
  *  ─────────────────────────────────────────────────────────────── */
 
 /* ── Config ── */
-const ANALYTICS_ENDPOINT = import.meta.env.VITE_ANALYTICS_URL ?? ''
+const ANALYTICS_ENDPOINT = 'https://portfolio-analytics.pragad33sh.workers.dev/events'
 const SEND_ANALYTICS = ANALYTICS_ENDPOINT.length > 0
 
 /* ── Device fingerprint (collected once) ── */
