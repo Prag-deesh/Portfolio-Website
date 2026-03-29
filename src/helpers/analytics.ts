@@ -13,6 +13,14 @@
 const ANALYTICS_ENDPOINT = 'https://portfolio-analytics.pragad33sh.workers.dev/events'
 const SEND_ANALYTICS = ANALYTICS_ENDPOINT.length > 0
 
+/* ── Umami helper (fires custom events to Umami dashboard) ── */
+declare global {
+  interface Window { umami?: { track: (event: string, data?: Record<string, unknown>) => void } }
+}
+function umamiTrack(event: string, data?: Record<string, unknown>) {
+  try { window.umami?.track(event, data) } catch { /* Umami not loaded yet */ }
+}
+
 /* ── Device fingerprint (collected once) ── */
 function getDeviceInfo() {
   const ua = navigator.userAgent
@@ -89,6 +97,7 @@ export function trackCvDownload() {
     device: getDeviceInfo(),
     downloadedAt: new Date().toISOString(),
   })
+  umamiTrack('cv-download')
 }
 
 /* ── Section visibility observer ── */
@@ -112,6 +121,7 @@ export function observeSections() {
           if (!observedSections.has(id)) {
             observedSections.add(id)
             sendEvent('section_view', { section: id })
+            umamiTrack('section-view', { section: id })
           }
         } else if (sectionTimers[id]) {
           // Section left viewport — report time spent
@@ -135,11 +145,13 @@ export function observeSections() {
 /* ── Social link click ── */
 export function trackSocialClick(platform: string, href: string) {
   sendEvent('social_click', { platform, href })
+  umamiTrack('social-click', { platform, href })
 }
 
 /* ── Contact form submit ── */
 export function trackContactSubmit() {
   sendEvent('contact_submit', { device: getDeviceInfo() })
+  umamiTrack('contact-submit')
 }
 
 /* ── Cleanup ── */
