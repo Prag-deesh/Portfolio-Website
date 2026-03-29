@@ -1,10 +1,10 @@
 import { useRef, useState } from 'react'
 import { motion } from 'framer-motion'
-import emailjs from '@emailjs/browser'
 import { HiOutlineMail, HiOutlineLocationMarker } from 'react-icons/hi'
 import { FiSend, FiCheck, FiAlertCircle } from 'react-icons/fi'
 import { FaWhatsapp } from 'react-icons/fa'
 import { personalInfo, sections, contactLabels } from '../helpers/constants'
+import { trackContactSubmit } from '../helpers/analytics'
 import {
   container, contactCard, contactIcon, input, slideIn, fadeIn,
 } from '../helpers/styles'
@@ -26,6 +26,8 @@ const Contact = () => {
     if (!formRef.current) return
     setStatus('sending')
     try {
+      // Dynamic import — emailjs is only loaded when the user actually submits
+      const emailjs = await import('@emailjs/browser')
       await emailjs.sendForm(
         import.meta.env.VITE_EMAILJS_SERVICE_ID,
         import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
@@ -33,6 +35,7 @@ const Contact = () => {
         import.meta.env.VITE_EMAILJS_PUBLIC_KEY
       )
       setStatus('success')
+      trackContactSubmit()
       formRef.current.reset()
       setTimeout(() => setStatus('idle'), 4000)
     } catch {

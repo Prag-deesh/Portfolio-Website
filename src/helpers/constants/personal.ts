@@ -4,7 +4,7 @@ export const personalInfo = {
   name: 'Pragadeesh',
   title: 'Software Engineer',
   greeting: "Hello, I'm",
-  profileImage: '/profile.png',
+  profileImage: '/profile-800.webp',
   description:
     'I build software for a living & prompting because I can\'t help it — turns out both make me a better engineer. Currently in enterprise tech, building web applications. Driven by curiosity, grounded by real-world engineering, and always looking for a better way to build.',
   aboutDescription: [

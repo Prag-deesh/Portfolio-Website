@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, memo } from 'react'
 import { motion } from 'framer-motion'
 import { personalInfo } from '../helpers/constants'
 import type { HeroAvatarProps } from '../helpers/interfaces'
@@ -18,9 +18,15 @@ const orbitDotsMd = [
   { r: 195, speed: 26, size: 2.5, delay: 13 },
   { r: 195, speed: 26, size: 2.5, delay: 20 },
 ]
-const orbitDotsSm = orbitDotsMd.map((d) => ({ ...d, r: Math.round(d.r * (160 / 185)) }))
+/* Mobile: fewer dots + tighter radii to avoid overflow */
+const orbitDotsSm = [
+  { r: 120, speed: 14, size: 3, delay: 0 },
+  { r: 130, speed: 20, size: 4, delay: 2 },
+  { r: 130, speed: 20, size: 3, delay: 8 },
+  { r: 140, speed: 26, size: 2.5, delay: 4 },
+]
 
-const HeroAvatar = ({ imageSrc, fallbackEmoji = '👨‍💻' }: HeroAvatarProps) => {
+const HeroAvatar = memo(({ imageSrc, fallbackEmoji = '👨‍💻' }: HeroAvatarProps) => {
   const [isMd, setIsMd] = useState(() => typeof window !== 'undefined' && window.innerWidth >= 768)
   useEffect(() => {
     const mq = window.matchMedia('(min-width: 768px)')
@@ -31,7 +37,9 @@ const HeroAvatar = ({ imageSrc, fallbackEmoji = '👨‍💻' }: HeroAvatarProps
   const orbitDots = isMd ? orbitDotsMd : orbitDotsSm
 
   return (
-    <div className="hero-avatar-wrap relative w-[280px] h-[280px] sm:w-[320px] sm:h-[320px] md:w-[370px] md:h-[370px]">
+    <div className="hero-avatar-wrap relative w-[240px] h-[240px] sm:w-[280px] sm:h-[280px] md:w-[370px] md:h-[370px] mx-auto"
+      style={{ overflow: 'visible', isolation: 'isolate' }}
+    >
 
       {/* ── Corner brackets + node dots ── */}
       <div className="absolute inset-0 pointer-events-none">
@@ -55,12 +63,12 @@ const HeroAvatar = ({ imageSrc, fallbackEmoji = '👨‍💻' }: HeroAvatarProps
       {/* ── Pulsing orbit rings ── */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
         <motion.div
-          className="absolute w-[270px] h-[270px] sm:w-[310px] sm:h-[310px] md:w-[360px] md:h-[360px] border border-dashed border-[var(--text-primary)] rounded-full"
+          className="absolute w-[230px] h-[230px] sm:w-[270px] sm:h-[270px] md:w-[360px] md:h-[360px] border border-dashed border-[var(--text-primary)] rounded-full"
           animate={{ opacity: [0.06, 0.1, 0.06], scale: [1, 1.02, 1] }}
           transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
         />
         <motion.div
-          className="absolute w-[240px] h-[240px] sm:w-[280px] sm:h-[280px] md:w-[330px] md:h-[330px] border border-dashed border-[var(--text-primary)] rounded-full"
+          className="absolute w-[200px] h-[200px] sm:w-[240px] sm:h-[240px] md:w-[330px] md:h-[330px] border border-dashed border-[var(--text-primary)] rounded-full"
           animate={{ opacity: [0.04, 0.07, 0.04], scale: [1, 0.98, 1] }}
           transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
         />
@@ -103,14 +111,35 @@ const HeroAvatar = ({ imageSrc, fallbackEmoji = '👨‍💻' }: HeroAvatarProps
         <div className="absolute inset-0 bg-[var(--bg-secondary)]" />
 
         {imageSrc ? (
-          <motion.img
-            src={imageSrc}
-            alt={personalInfo.name}
-            className="relative z-10 w-full h-full object-cover"
+          <motion.div
+            className="relative z-10 w-full h-full"
             initial={{ scale: 1.1 }}
             animate={{ scale: 1 }}
             transition={{ duration: 1.5, ease: 'easeOut' }}
-          />
+          >
+            <picture>
+              <source
+                type="image/webp"
+                srcSet="/profile-400.webp 400w, /profile-480.webp 480w, /profile-800.webp 800w"
+                sizes="(max-width: 640px) 280px, (max-width: 768px) 320px, 370px"
+              />
+              <source
+                type="image/jpeg"
+                srcSet="/profile-400.jpg 400w, /profile-480.jpg 480w, /profile-800.jpg 800w"
+                sizes="(max-width: 640px) 280px, (max-width: 768px) 320px, 370px"
+              />
+              <img
+                src="/profile-800.jpg"
+                alt={personalInfo.name}
+                className="w-full h-full object-cover"
+                width={800}
+                height={800}
+                loading="eager"
+                fetchPriority="high"
+                decoding="async"
+              />
+            </picture>
+          </motion.div>
         ) : (
           <div className="relative z-10 w-full h-full flex items-center justify-center text-8xl select-none">
             {fallbackEmoji}
@@ -176,6 +205,8 @@ const HeroAvatar = ({ imageSrc, fallbackEmoji = '👨‍💻' }: HeroAvatarProps
       </span>
     </div>
   )
-}
+})
+
+HeroAvatar.displayName = 'HeroAvatar'
 
 export default HeroAvatar

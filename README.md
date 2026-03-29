@@ -5,119 +5,224 @@
 [![Live Site](https://img.shields.io/badge/🚀_Live-pragadeesh.pages.dev-000?style=for-the-badge)](https://pragadeesh.pages.dev)
 
 ![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=white)
-![TypeScript](https://img.shields.io/badge/TypeScript-5.9-3178C6?logo=typescript&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.6-3178C6?logo=typescript&logoColor=white)
 ![Tailwind](https://img.shields.io/badge/Tailwind-v4-06B6D4?logo=tailwindcss&logoColor=white)
 ![Vite](https://img.shields.io/badge/Vite-8-646CFF?logo=vite&logoColor=white)
 ![Cloudflare](https://img.shields.io/badge/Deployed-Cloudflare_Pages-F38020?logo=cloudflarepages&logoColor=white)
 
 ---
 
-### ✨ Features
+## ✨ Features
 
 - **Dark / Light theme** — toggle with system preference detection & localStorage persistence
-- **Constellation canvas** — 300 interactive particles with mouse attraction, repulsion & constellation lines
-- **Gradient blobs** — 4 floating blurred orbs creating ambient depth per theme
-- **Plexus border system** — corner brackets + node dots on all cards (CSS-only, no JS)
+- **Constellation canvas** — interactive particles with mouse/touch attraction & constellation lines
+- **Gradient blobs** — floating orbs creating ambient depth per theme (pure CSS animations)
+- **Plexus border system** — corner brackets + node dots on all cards (CSS-only)
 - **Parallax scroll** — sections reveal with Y-offset depth and scale animations
-- **Hero avatar** — morphing clip-path, 3-tier orbit rings, breathing dots, scan line, vignette
-- **Responsive** — mobile-first, works on all screen sizes
-- **Contact form** — powered by EmailJS
-- **SEO ready** — meta tags, Open Graph, semantic HTML, dynamic theme-color
+- **Hero avatar** — responsive `<picture>` with WebP, orbit rings, breathing dots
+- **Responsive** — mobile-first, touch-optimized, 44px tap targets, works on all screen sizes
+- **Contact form** — powered by EmailJS (dynamically imported only on submit)
+- **SEO** — full Open Graph, Twitter Card, JSON-LD structured data, sitemap, robots.txt
+- **Analytics** — Cloudflare Web Analytics + custom event tracking (cookie-free)
 
 ---
 
-### 🧱 Tech Stack
+## 🧱 Tech Stack
 
 | Technology | Purpose |
 |---|---|
 | **React 19** | UI components with hooks |
-| **TypeScript** | Type-safe code throughout |
+| **TypeScript 5.6** | Type-safe code throughout |
 | **Tailwind CSS v4** | Utility-first styling with `@theme` directive |
-| **Vite 8** | Build tool & dev server |
-| **Framer Motion** | Scroll animations, parallax, hover effects, orbit animations |
-| **Canvas 2D API** | Constellation particle background (no library, raw canvas) |
-| **CSS Custom Properties** | Theme system (light/dark switching via `data-theme` attribute) |
-| **react-icons** | Icon library (Heroicons, Feather, Bootstrap, SimpleIcons) |
-| **EmailJS** | Contact form email delivery (no backend needed) |
-| **Cloudflare Pages** | Hosting with global CDN & auto-deploy from GitHub |
+| **Vite 8** | Build tool with Rollup + Lightning CSS |
+| **Framer Motion 12** | Scroll animations, parallax, hover effects |
+| **Canvas 2D API** | Constellation particle background (raw canvas, no library) |
+| **vite-plugin-compression2** | Pre-built Brotli + Gzip at build time |
+| **react-icons** | Icons (Heroicons, Feather, Bootstrap, SimpleIcons) |
+| **EmailJS** | Contact form delivery (dynamic import, no backend) |
+| **Cloudflare Pages** | Hosting with global CDN, Web Analytics |
 
 ---
 
-### 🌌 How the Background Animation Works
+## 🚀 Performance
 
-The background is a **two-layer system** that creates depth:
+Total transfer size: **~137KB Brotli** (down from ~3.5MB). Builds in < 1 second.
 
-#### Layer 1: Constellation Field (`ConstellationField.tsx`) — Canvas 2D
+### Images
+| What | Before | After |
+|---|---|---|
+| Profile photo | `profile.png` — 3.1MB, single size | WebP responsive set: 400/480/800px with JPEG fallback |
+| Hero image | `<img>` tag | `<picture>` with `srcSet`, `fetchpriority="high"` preload |
+| OG image | None | Custom 1200×630 branded PNG (58KB) |
 
-A raw HTML5 `<canvas>` element running a **requestAnimationFrame** loop at 60fps:
+### Bundle Splitting
+| Chunk | Size (Brotli) |
+|---|---|
+| `vendor-react` | ~49KB |
+| `vendor-motion` | ~41KB |
+| `index` (app) | ~22KB |
+| `styles` | ~3.4KB |
+| `CSS` | ~6.3KB |
+| Lazy chunks (7 sections) | ~5KB total |
 
-1. **300 particles** spawn with random positions, velocities, sizes, and phase offsets
-2. Each frame:
-   - Semi-transparent background fill (`rgba` with 0.15 alpha) creates a **motion blur trail** effect
-   - Particles drift with slight velocity, wrapped at screen edges (toroidal space)
-   - Each particle **breathes** — its radius oscillates using `sin(time + phase)`
-   - Particles get a subtle **glow halo** (larger transparent circle behind the core)
-3. **Mouse interaction** (3 zones):
-   - **Far zone** (50–180px): particles are gently **attracted** toward cursor with a **swirl** (perpendicular force)
-   - **Near zone** (<50px): particles are **repelled** away from cursor
-   - **Outside** (>180px): no effect
-4. **Constellation lines**: nearby particles (within 110px) draw connecting lines
-   - Lines are **boosted near the cursor** — brighter and thicker when the midpoint is close to mouse
-   - Without mouse, only every 4th particle checks connections (performance optimization)
-5. **Theme-aware**: colors switch between light gray (dark mode) and medium gray (light mode) to stay monochrome
+**How:** `React.lazy()` + `Suspense` for 7 below-fold components. Manual Rollup chunks split react, react-dom, framer-motion into separate vendor files.
 
-#### Layer 2: Gradient Blobs (`FloatingShapes.tsx`) — Framer Motion
+### Fonts
+- Google Fonts (Inter + Sora) loaded **non-render-blocking** via `media="print"` trick with `onload="this.media='all'"`
+- `dns-prefetch` + `preconnect` for Google Fonts and EmailJS API
 
-4 large blurred circles floating behind everything:
+### Compression
+- **Brotli + Gzip** pre-built at build time via `vite-plugin-compression2`
+- Every `.js`, `.css`, `.html`, `.svg` file has `.br` and `.gz` versions in the build output
+- Cloudflare Pages serves the compressed version automatically
 
-1. Each blob is a `<div>` with `radial-gradient` background and `blur(80px)` filter
-2. Animated with Framer Motion — slow `x/y/scale` oscillation (20–26 second loops)
-3. **Theme-aware colors**: dark mode uses lighter grays (subtle bright patches), light mode uses darker grays (subtle shadow patches)
-4. Very low opacity (0.12–0.15) — creates **ambient depth** without being distracting
-
-#### Together:
-- Canvas particles (z-index: 0) → sharp, interactive, constellation-like
-- Gradient blobs (z-index: 1) → soft, atmospheric, adds warmth
-- Content (z-index: 10) → sits on top of both layers
-- Both layers are `position: fixed` with `pointer-events: none`
+### Dead Code Removed
+- Removed unused `three.js` + `@types/three` + `vite-plugin-glsl` (~150KB saved)
+- EmailJS dynamically imported only on form submit (not in main bundle)
 
 ---
 
-### 🚀 Quick Start
+## 🎨 Animations
 
-```bash
-pnpm install      # install dependencies
-pnpm dev          # start dev server → http://localhost:5173
-pnpm build        # production build → build/
-pnpm preview      # preview production build
-```
+### Layer 1: Constellation Field (`ConstellationField.tsx`) — Canvas 2D
+
+A raw HTML5 `<canvas>` running a `requestAnimationFrame` loop:
+
+- **60 particles on mobile, 120 on desktop** — spawn with random positions, velocities, sizes
+- Semi-transparent background fill creates a **motion blur trail**
+- Particles drift and wrap at screen edges (toroidal space)
+- Each particle **breathes** — radius oscillates via `sin(time + phase)`
+- **Mouse/touch interaction** with 3 zones:
+  - *Far* (50–180px): gentle **attraction** with **swirl** force
+  - *Near* (<50px): **repulsion** away from cursor
+  - *Outside*: no effect
+- **Constellation lines** between nearby particles (110px threshold)
+- Lines **brighten near cursor** — thicker and more visible near mouse
+- **Touch support**: `touchstart/touchmove/touchend` on `window` with 600ms fade timer
+- **30fps throttle on mobile** for smooth scrolling
+- Glow halos skipped on mobile for GPU savings
+- `memo()` wrapped, axis-aligned early rejection in connection loop
+
+### Layer 2: Gradient Blobs (`FloatingShapes.tsx`) — Pure CSS
+
+- 4 blobs with `radial-gradient` background (no `blur()` filter — alpha fade instead)
+- Animated with **CSS `@keyframes blob-float`** (no Framer Motion = no JS cost)
+- Theme-aware colors via CSS custom properties
+- **Mobile**: fewer blobs (1 hidden), smaller sizes, lighter animation
+
+### Accessibility
+- `@media (prefers-reduced-motion: reduce)` disables all animations globally
+- `pointer: coarse` ensures 44px minimum tap targets
 
 ---
 
-### 📁 Structure
+## 📁 Project Structure
 
 ```
 src/
-├── components/            → UI sections (Header, Home, About, Skills, etc.)
-│   ├── ConstellationField → Canvas 2D particle background (300 particles, mouse-reactive)
-│   ├── FloatingShapes     → Animated gradient blobs (4 blurred orbs, theme-aware)
-│   ├── HeroAvatar         → Profile photo with orbit animations
-│   ├── PlexusFrame        → Reusable plexus-bordered image frame
-│   ├── SectionReveal      → Scroll-triggered parallax wrapper
-│   ├── SectionHeader      → Reusable section title component
-│   └── TabBar             → Reusable tab switcher
+├── components/
+│   ├── ConstellationField.tsx  → Canvas particle background (touch + mouse)
+│   ├── FloatingShapes.tsx      → CSS-animated gradient blobs
+│   ├── HeroAvatar.tsx          → Responsive <picture> with orbit animations
+│   ├── Home.tsx                → Hero section with parallax (disabled on mobile)
+│   ├── About.tsx               → Stats + bio + CV download
+│   ├── Skills.tsx              → Tech skills grid
+│   ├── Work.tsx                → Company & college projects
+│   ├── Qualification.tsx       → Education & experience timeline
+│   ├── Contact.tsx             → Form with dynamic EmailJS import
+│   ├── Header.tsx              → Nav + theme toggle
+│   ├── Footer.tsx              → Footer links
+│   ├── ScrollUp.tsx            → Scroll-to-top button
+│   ├── SectionReveal.tsx       → Scroll-triggered parallax wrapper
+│   ├── SectionHeader.tsx       → Reusable section title
+│   ├── PlexusFrame.tsx         → Plexus-bordered image frame
+│   └── TabBar.tsx              → Reusable tab switcher
 ├── helpers/
-│   ├── constants/         → All content (skills, projects, bio, sections...)
-│   ├── interfaces/        → TypeScript interfaces
-│   └── styles/            → Shared Tailwind class tokens
-└── index.css              → Theme variables, plexus borders, keyframes
+│   ├── analytics.ts            → Custom event tracking (pageview, CV, sections)
+│   ├── constants/
+│   │   ├── personal.ts         → Name, bio, contact, CV path
+│   │   ├── skills.tsx          → Tech skills (primary, secondary, soft)
+│   │   ├── projects.ts         → Company & college projects
+│   │   ├── qualification.ts    → Education & experience timeline
+│   │   ├── socials.tsx         → Social media links
+│   │   ├── sections.tsx        → Section titles, labels, tab configs
+│   │   ├── about.tsx           → About page stats
+│   │   └── navigation.tsx      → Nav menu items
+│   ├── interfaces/
+│   │   └── index.ts            → TypeScript interfaces
+│   └── styles/
+│       ├── components.ts       → Component-specific Tailwind tokens
+│       └── index.ts            → Shared Tailwind tokens
+├── App.tsx                     → Root with lazy loading + analytics init
+├── main.tsx                    → Entry point
+└── index.css                   → Theme vars, keyframes, tap targets
 ```
 
 ---
 
-### ✏️ Edit Your Content
+## 🔍 SEO
 
-Everything is in **`src/helpers/constants/`** — just edit and save:
+| Feature | Implementation |
+|---|---|
+| **Open Graph** | `og:title`, `og:description`, `og:image` (1200×630), `og:url`, `og:site_name` |
+| **Twitter Card** | `summary_large_image` with full title, description, image |
+| **JSON-LD** | `Person` schema — `jobTitle`, `worksFor`, `alumniOf`, `sameAs` (socials), `knowsAbout` |
+| **Canonical URL** | `<link rel="canonical">` |
+| **Sitemap** | `public/sitemap.xml` with `lastmod` and `changefreq` |
+| **Robots.txt** | `Allow: /`, `Disallow: /assets/`, sitemap reference |
+| **OG Image** | Custom branded SVG → PNG (58KB) with name, role, trait pills |
+| **Semantic HTML** | `<section>`, `<nav>`, `<main>`, `<header>`, `<footer>`, proper heading hierarchy |
+| **Noscript fallback** | Text content visible when JS is disabled |
+
+---
+
+## 📊 Analytics
+
+### Cloudflare Web Analytics (automatic)
+Free, cookie-free, < 1KB beacon script in `index.html`. Tracks:
+- Page views over time
+- Visitor countries & cities
+- Device type (desktop / mobile / tablet)
+- Browser & OS breakdown
+- Referrer sources (LinkedIn, GitHub, Google, direct)
+
+> **Setup:** Replace `YOUR_CF_ANALYTICS_TOKEN` in `index.html` with your token from Cloudflare Dashboard → Web Analytics.
+
+### Custom Event Tracker (`src/helpers/analytics.ts`)
+Lightweight module (~500 bytes Brotli) using `navigator.sendBeacon`:
+
+| Event | Data | Trigger |
+|---|---|---|
+| `pageview` | Full device fingerprint | Page load |
+| `cv_download` | Device info + timestamp | CV button click |
+| `section_view` | Section ID | Section enters viewport (IntersectionObserver) |
+| `section_time` | Section ID + seconds | Section leaves viewport |
+| `social_click` | Platform + URL | Social icon click |
+| `contact_submit` | Device info | Form submit success |
+
+**Device info collected:** screen resolution, viewport, DPR, platform, language, touch points, device memory, CPU cores, connection type (wifi/4g/3g), speed (Mbps), timezone (approximate location), referrer, user agent, timestamp.
+
+> **Setup:** Set `VITE_ANALYTICS_URL` env var to your Cloudflare Worker endpoint. Without it, custom events are silently skipped (zero overhead).
+
+---
+
+## 📱 Mobile Optimizations
+
+| Area | What |
+|---|---|
+| **Parallax** | Completely disabled on mobile (`SectionReveal` + `Home`) — zero transform cost |
+| **Canvas** | 60 particles (vs 120), 30fps throttle, no glow halos, touch events on `window` |
+| **Blobs** | Fewer blobs, smaller sizes, lighter CSS animation, 1 blob hidden |
+| **Avatar** | 4 orbit dots (vs 8), tighter radii, smaller container (240px vs 280px) |
+| **Layout** | Avatar-first ordering, responsive text sizes, `px-4` mobile padding |
+| **Tap targets** | 44px minimum for all interactive elements (`pointer: coarse`) |
+| **Images** | Responsive `<picture>` with 400px mobile / 800px desktop srcSet |
+
+---
+
+## ✏️ Edit Your Content
+
+Everything is in **`src/helpers/constants/`** — edit and save:
 
 | File | What it controls |
 |---|---|
@@ -130,19 +235,32 @@ Everything is in **`src/helpers/constants/`** — just edit and save:
 
 ---
 
-### ⚙️ Setup EmailJS
-
-Add your keys to `.env`:
+## ⚙️ Environment Variables
 
 ```env
+# EmailJS (required for contact form)
 VITE_EMAILJS_SERVICE_ID=your_service_id
 VITE_EMAILJS_TEMPLATE_ID=your_template_id
 VITE_EMAILJS_PUBLIC_KEY=your_public_key
+
+# Custom analytics endpoint (optional — Cloudflare Worker URL)
+VITE_ANALYTICS_URL=https://your-worker.your-domain.workers.dev/events
 ```
 
 ---
 
-### 🌐 Deploy
+## 🚀 Quick Start
+
+```bash
+pnpm install      # install dependencies
+pnpm dev          # dev server → http://localhost:3000
+pnpm build        # production build → build/
+pnpm preview      # preview production build
+```
+
+---
+
+## 🌐 Deploy
 
 Deployed on **Cloudflare Pages** with auto-builds from GitHub.
 

@@ -2,30 +2,106 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#fafafa" media="(prefers-color-scheme: light)" />
-    <meta name="theme-color" content="#121212" media="(prefers-color-scheme: dark)" />
+    <title>Pragadeesh — Software Engineer Portfolio</title>
+
+    <!-- ── Primary Meta ── -->
     <meta
       name="description"
-      content="Pragadeesh — Software Engineer | Web & Mobile Developer | Portfolio showcasing projects in Web Apps, Mobile Apps, Machine Learning, and Cyber Security."
+      content="Pragadeesh — Software Engineer at Ford. Portfolio showcasing 9+ projects in Web Apps, Mobile Apps, Machine Learning, and Cyber Security. Currently building enterprise web applications."
     />
     <meta name="author" content="Pragadeesh" />
-    <meta property="og:title" content="Pragadeesh — Software Engineer Portfolio" />
-    <meta property="og:description" content="Explore my projects, skills, and experience in software engineering." />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://pragadeesh.dev/" />
+
+    <!-- ── Open Graph (Facebook, LinkedIn, WhatsApp, Telegram, iMessage) ── -->
     <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Pragadeesh Portfolio" />
+    <meta property="og:title" content="Pragadeesh — Software Engineer Portfolio" />
+    <meta property="og:description" content="Software Engineer at Ford. 9+ projects across web, mobile, ML & cybersecurity. Driven by curiosity, grounded by real-world engineering." />
+    <meta property="og:url" content="https://pragadeesh.dev/" />
+    <meta property="og:image" content="https://pragadeesh.dev/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Pragadeesh — Software Engineer Portfolio" />
+    <meta property="og:locale" content="en_US" />
+
+    <!-- ── Twitter Card ── -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Pragadeesh — Software Engineer Portfolio" />
+    <meta name="twitter:description" content="Software Engineer at Ford. 9+ projects across web, mobile, ML & cybersecurity." />
+    <meta name="twitter:image" content="https://pragadeesh.dev/og-image.png" />
+    <meta name="twitter:image:alt" content="Pragadeesh — Software Engineer Portfolio" />
+
+    <!-- ── Theme & Icons ── -->
+    <meta name="theme-color" content="#fafafa" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#121212" media="(prefers-color-scheme: dark)" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/og-image.png" />
     <link rel="manifest" href="/manifest.json" />
+
+    <!-- ── Resource Hints ── -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="dns-prefetch" href="https://api.emailjs.com" />
+    <link rel="dns-prefetch" href="https://static.cloudflareinsights.com" />
+    <link rel="preload" as="image" type="image/webp" href="/profile-800.webp" fetchpriority="high" />
+
+    <!-- ── Non-render-blocking Fonts ── -->
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Sora:wght@400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@500;600;700&display=swap"
       rel="stylesheet"
+      media="print"
+      onload="this.media='all'"
     />
-    <title>Pragadeesh</title>
+    <noscript>
+      <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@500;600;700&display=swap" rel="stylesheet" />
+    </noscript>
+
+    <!-- ── Structured Data (JSON-LD) — helps Google Knowledge Panel ── -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Pragadeesh",
+      "jobTitle": "Software Engineer",
+      "description": "Software Engineer at Ford. Building enterprise web applications with AI-powered workflows.",
+      "url": "https://pragadeesh.dev",
+      "email": "mailto:pragadeeshgg@gmail.com",
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "IN"
+      },
+      "alumniOf": {
+        "@type": "CollegeOrUniversity",
+        "name": "Kumaraguru College of Technology"
+      },
+      "worksFor": {
+        "@type": "Organization",
+        "name": "Ford Motor Company"
+      },
+      "sameAs": [
+        "https://github.com/Prag-deesh",
+        "https://www.linkedin.com/in/pragadeeshwaran-k-j-440908268/",
+        "https://www.instagram.com/wpragdeesh/",
+        "https://www.youtube.com/channel/UCSyMhE-Z1d4DRRiQj4ZhWzQ"
+      ],
+      "knowsAbout": ["Web Development", "Mobile Development", "Machine Learning", "Cyber Security", "React", "TypeScript"]
+    }
+    </script>
   </head>
   <body>
     <noscript>Pragadeesh — Software Engineer Portfolio. Enable JavaScript to view this site.</noscript>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+
+    <!-- ── Cloudflare Web Analytics (free, cookie-free, ~< 1KB) ── -->
+    <!-- Replace YOUR_TOKEN with your actual Cloudflare Web Analytics token -->
+    <!-- Get it from: Cloudflare Dashboard → your site → Web Analytics → JS Snippet -->
+    <script
+      defer
+      src="https://static.cloudflareinsights.com/beacon.min.js"
+      data-cf-beacon='{"token": "YOUR_CF_ANALYTICS_TOKEN"}'
+    ></script>
   </body>
 </html>

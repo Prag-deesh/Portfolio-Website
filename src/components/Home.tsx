@@ -3,6 +3,7 @@ import { motion, useScroll, useTransform } from 'framer-motion'
 import { FiArrowDown } from 'react-icons/fi'
 import { HiOutlineDownload } from 'react-icons/hi'
 import { personalInfo, socialLinks, homeLabels } from '../helpers/constants'
+import { trackCvDownload, trackSocialClick } from '../helpers/analytics'
 import { btnPrimary, btnOutline, label, iconBtnMd } from '../helpers/styles'
 import {
   homeSection, homeContainer, homeGrid, homeHeading, homeTitle, homeTitleUnderline,
@@ -20,15 +21,16 @@ const Home = () => {
   }, [])
 
   const { scrollY } = useScroll()
-  const textY = useTransform(scrollY, [0, 500], [0, isMobile ? -15 : -60])
-  const imageY = useTransform(scrollY, [0, 500], [0, isMobile ? 10 : 50])
-  const heroOpacity = useTransform(scrollY, [0, 400], [1, isMobile ? 0.6 : 0.3])
+  // Disable scroll-linked transforms entirely on mobile for smoother scrolling
+  const textY = useTransform(scrollY, [0, 500], isMobile ? [0, 0] : [0, -60])
+  const imageY = useTransform(scrollY, [0, 500], isMobile ? [0, 0] : [0, 50])
+  const heroOpacity = useTransform(scrollY, [0, 400], isMobile ? [1, 1] : [1, 0.3])
 
   return (
     <section id="home" className={homeSection}>
       <div className={homeContainer}>
-        <motion.div style={{ opacity: heroOpacity }} className={homeGrid}>
-          <motion.div style={{ y: textY }}>
+        <motion.div style={isMobile ? undefined : { opacity: heroOpacity }} className={homeGrid}>
+          <motion.div style={isMobile ? undefined : { y: textY }}>
             <motion.div
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
@@ -50,14 +52,14 @@ const Home = () => {
                 <a href="#contact" className={btnPrimary}>
                   {homeLabels.ctaPrimary} <FiArrowDown />
                 </a>
-                <a href={personalInfo.cvPath} download className={btnOutline}>
+                <a href={personalInfo.cvPath} download className={btnOutline} onClick={trackCvDownload}>
                   {homeLabels.ctaSecondary} <HiOutlineDownload />
                 </a>
               </div>
             </motion.div>
           </motion.div>
 
-          <motion.div style={{ y: imageY }} className={homeHeroWrap}>
+          <motion.div style={isMobile ? undefined : { y: imageY }} className={homeHeroWrap}>
             <motion.div
               initial={{ opacity: 0, scale: 0.85 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -85,6 +87,7 @@ const Home = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3, delay: 0.7 + i * 0.1 }}
               className={iconBtnMd}
+              onClick={() => trackSocialClick(link.label, link.href)}
             >
               {link.icon}
             </motion.a>

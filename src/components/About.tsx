@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion'
 import { HiOutlineDownload } from 'react-icons/hi'
 import { personalInfo, aboutStats, sections, aboutLabels } from '../helpers/constants'
+import { trackCvDownload } from '../helpers/analytics'
 import { container, labelSm, fadeIn, fadeUp, statCard } from '../helpers/styles'
 import {
   aboutSection, aboutStatsGrid, aboutStatIcon,
@@ -37,7 +38,7 @@ const About = () => {
             <p key={i} className={aboutParagraph}>{para}</p>
           ))}
 
-          <a href={personalInfo.cvPath} download className={aboutCvBtn}>
+          <a href={personalInfo.cvPath} download className={aboutCvBtn} onClick={trackCvDownload}>
             {aboutLabels.downloadCv} <HiOutlineDownload />
           </a>
         </motion.div>

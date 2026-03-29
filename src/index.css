@@ -241,3 +241,48 @@ body {
   0%   { top: -6px; }
   100% { top: 100%; }
 }
+
+/* ── Gradient blob float — pure CSS, compositor-thread only ── */
+@keyframes blob-float {
+  0%   { transform: translate(0, 0) scale(1); }
+  25%  { transform: translate(30px, -25px) scale(1.05); }
+  50%  { transform: translate(-20px, 15px) scale(0.95); }
+  75%  { transform: translate(15px, -10px) scale(1.02); }
+  100% { transform: translate(0, 0) scale(1); }
+}
+
+.blob-float {
+  animation: blob-float ease-in-out infinite;
+}
+
+/* ── Reduced motion — respect user preference ── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .blob-float { animation: none; }
+  .hero-avatar-clip { animation: none; }
+  .hero-scanline::after { animation: none; }
+}
+
+/* ── Mobile: lighter blob movement ── */
+@media (max-width: 767px) {
+  .blob-float {
+    animation-duration: 30s;
+  }
+  @keyframes blob-float {
+    0%   { transform: translate(0, 0) scale(1); }
+    50%  { transform: translate(10px, -10px) scale(1.02); }
+    100% { transform: translate(0, 0) scale(1); }
+  }
+}
+
+/* ── Ensure tap targets are at least 44px (WCAG) ── */
+@media (pointer: coarse) {
+  button, a, [role="button"] {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}

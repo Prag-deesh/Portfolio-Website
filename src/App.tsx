@@ -1,16 +1,19 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, lazy, Suspense } from 'react'
 import Header from './components/Header'
 import Home from './components/Home'
-import About from './components/About'
-import Skills from './components/Skills'
-import Qualification from './components/Qualification'
-import Work from './components/Work'
-import Contact from './components/Contact'
-import Footer from './components/Footer'
-import ScrollUp from './components/ScrollUp'
 import ConstellationField from './components/ConstellationField'
 import GradientBlobs from './components/FloatingShapes'
 import SectionReveal from './components/SectionReveal'
+import { initAnalytics } from './helpers/analytics'
+
+// Lazy load below-the-fold sections — only fetched when needed
+const About = lazy(() => import('./components/About'))
+const Skills = lazy(() => import('./components/Skills'))
+const Qualification = lazy(() => import('./components/Qualification'))
+const Work = lazy(() => import('./components/Work'))
+const Contact = lazy(() => import('./components/Contact'))
+const Footer = lazy(() => import('./components/Footer'))
+const ScrollUp = lazy(() => import('./components/ScrollUp'))
 
 function App() {
   const [theme, setTheme] = useState<'light' | 'dark'>(() => {
@@ -28,6 +31,9 @@ function App() {
     document.querySelector('meta[name="theme-color"][media*="dark"]')?.setAttribute('content', color)
   }, [theme])
 
+  // Analytics — fire once on mount
+  useEffect(() => { initAnalytics() }, [])
+
   const toggleTheme = () => setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'))
 
   return (
@@ -38,25 +44,29 @@ function App() {
 
       <main className="relative z-10 overflow-visible">
         <Home />
-        <SectionReveal parallaxY={30}>
-          <About />
-        </SectionReveal>
-        <SectionReveal parallaxY={25} scaleFrom={0.98}>
-          <Skills />
-        </SectionReveal>
-        <SectionReveal parallaxY={35}>
-          <Qualification />
-        </SectionReveal>
-        <SectionReveal parallaxY={30} scaleFrom={0.98}>
-          <Work />
-        </SectionReveal>
-        <SectionReveal parallaxY={25}>
-          <Contact />
-        </SectionReveal>
+        <Suspense fallback={null}>
+          <SectionReveal parallaxY={30}>
+            <About />
+          </SectionReveal>
+          <SectionReveal parallaxY={25} scaleFrom={0.98}>
+            <Skills />
+          </SectionReveal>
+          <SectionReveal parallaxY={35}>
+            <Qualification />
+          </SectionReveal>
+          <SectionReveal parallaxY={30} scaleFrom={0.98}>
+            <Work />
+          </SectionReveal>
+          <SectionReveal parallaxY={25}>
+            <Contact />
+          </SectionReveal>
+        </Suspense>
       </main>
 
-      <Footer />
-      <ScrollUp />
+      <Suspense fallback={null}>
+        <Footer />
+        <ScrollUp />
+      </Suspense>
     </>
   )
 }

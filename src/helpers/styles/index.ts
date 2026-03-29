@@ -1,7 +1,7 @@
 /* ── Shared Tailwind class tokens ──────────── */
 
 /* ── Layout ─────────────────────────────────── */
-export const container = 'max-w-[1280px] mx-auto px-6'
+export const container = 'max-w-[1280px] mx-auto px-4 sm:px-6'
 export const headingFont = 'font-heading'
 
 /* ── Glass cards ────────────────────────────── */
@@ -24,7 +24,7 @@ export const sectionSubtitle = label
 
 /* ── Buttons ────────────────────────────────── */
 const btnBase =
-  'plexus-border plexus-border-sm inline-flex items-center gap-2 px-7 py-3.5 font-semibold text-xs uppercase tracking-widest hover:-translate-y-0.5 hover:shadow-lg transition-all duration-250'
+  'plexus-border plexus-border-sm inline-flex items-center justify-center gap-2 px-5 py-3 md:px-7 md:py-3.5 font-semibold text-xs uppercase tracking-widest hover:-translate-y-0.5 hover:shadow-lg transition-all duration-250'
 export const btnPrimary =
   `${btnBase} bg-[var(--text-primary)] text-[var(--bg-primary)] border-transparent! hover:opacity-85`
 export const btnOutline =
@@ -77,7 +77,7 @@ export const contactIcon = 'text-2xl text-[var(--text-primary)] shrink-0'
 
 /* ── Scroll-to-top button ───────────────────── */
 export const scrollUpBtn =
-  'plexus-border plexus-border-sm fixed bottom-8 right-8 z-50 flex items-center justify-center w-11 h-11 bg-[var(--text-primary)] text-[var(--bg-primary)] border-transparent! text-lg shadow-md hover:-translate-y-1 hover:shadow-lg hover:opacity-85 transition-all duration-150 cursor-pointer'
+  'plexus-border plexus-border-sm fixed bottom-6 right-6 md:bottom-8 md:right-8 z-50 flex items-center justify-center w-11 h-11 bg-[var(--text-primary)] text-[var(--bg-primary)] border-transparent! text-lg shadow-md hover:-translate-y-1 hover:shadow-lg hover:opacity-85 transition-all duration-150 cursor-pointer'
 
 /* ── Timeline (qualification) ───────────────── */
 export const timelineLine = 'absolute left-2 top-0 bottom-0 w-0.5 bg-[var(--border-glass)]'
