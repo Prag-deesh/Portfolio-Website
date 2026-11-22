@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion'
+import { m as motion } from 'framer-motion'
 import { personalInfo, socialLinks, footerLinks, footerLabels } from '../helpers/constants'
 import {
   footerSection, footerInner, footerMotion, footerLogo, footerNav, footerNavLink,

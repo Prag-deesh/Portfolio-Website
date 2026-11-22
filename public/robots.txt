@@ -1,7 +1,6 @@
 # https://www.robotstxt.org/robotstxt.html
 User-agent: *
 Allow: /
-Disallow: /assets/
 
 # Sitemap
-Sitemap: https://pragadeesh.dev/sitemap.xml
+Sitemap: https://pragadeesh.pages.dev/sitemap.xml

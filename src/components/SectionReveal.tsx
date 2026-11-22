@@ -1,6 +1,7 @@
-import { useRef, useState, useEffect } from 'react'
-import { motion, useScroll, useTransform } from 'framer-motion'
+import { useRef } from 'react'
+import { m as motion, useScroll, useTransform } from 'framer-motion'
 import type { SectionRevealProps } from '../helpers/interfaces'
+import { useIsMobile } from '../helpers/useIsMobile'
 
 const SectionReveal = ({
   children,
@@ -9,14 +10,7 @@ const SectionReveal = ({
   scaleFrom = 0.98,
 }: SectionRevealProps) => {
   const ref = useRef<HTMLDivElement>(null)
-  const [isMobile, setIsMobile] = useState(false)
-
-  useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth < 768)
-    check()
-    window.addEventListener('resize', check, { passive: true })
-    return () => window.removeEventListener('resize', check)
-  }, [])
+  const isMobile = useIsMobile()
 
   const { scrollYProgress } = useScroll({
     target: ref,

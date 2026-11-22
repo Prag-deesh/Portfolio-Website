@@ -1,6 +1,6 @@
 /* ── Shared section header ──────────────────── */
 
-import { motion } from 'framer-motion'
+import { m as motion } from 'framer-motion'
 import { sectionHeader, sectionTitle, sectionSubtitle, titleHighlight } from '../helpers/styles'
 import type { SectionConfig } from '../helpers/interfaces'
 

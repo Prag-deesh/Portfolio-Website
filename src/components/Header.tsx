@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { m as motion, AnimatePresence } from 'framer-motion'
 import { BsSun, BsMoon, BsList, BsX } from 'react-icons/bs'
 import { navLinks, personalInfo } from '../helpers/constants'
 import type { HeaderProps } from '../helpers/interfaces'

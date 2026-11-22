@@ -1,5 +1,6 @@
-import { memo, useState, useEffect } from 'react'
+import { memo } from 'react'
 import type { GradientBlobsProps } from '../helpers/interfaces'
+import { useIsMobile } from '../helpers/useIsMobile'
 
 /*
  * Performance-optimized gradient blobs.
@@ -22,14 +23,7 @@ const blobPositions = [
 const GradientBlobs = memo(({ theme }: GradientBlobsProps) => {
   const isDark = theme === 'dark'
   const opacity = isDark ? 0.15 : 0.12
-  const [isMobile, setIsMobile] = useState(() => typeof window !== 'undefined' && window.innerWidth < 768)
-
-  useEffect(() => {
-    const mq = window.matchMedia('(max-width: 767px)')
-    const handler = (e: MediaQueryListEvent) => setIsMobile(e.matches)
-    mq.addEventListener('change', handler)
-    return () => mq.removeEventListener('change', handler)
-  }, [])
+  const isMobile = useIsMobile()
 
   // Soft radial gradients that naturally fade — no blur filter needed
   const colors = isDark

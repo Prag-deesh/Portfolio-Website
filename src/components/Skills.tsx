@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion'
+import { m as motion } from 'framer-motion'
 import { primarySkills, secondarySkills, softSkills, sections, skillsLabels } from '../helpers/constants'
 import {
   container, skillPillPrimary, skillPillSecondary, softSkillPill, fadeUp,

@@ -23,8 +23,10 @@ const ConstellationField = memo(({ theme = 'dark', className = '' }: Constellati
     // ── Sizing ──
     let w = window.innerWidth
     let h = window.innerHeight
-    const dpr = Math.min(window.devicePixelRatio, 2)
+    // Particles are 1-3px soft dots — 1.5x DPR is visually identical and ~45% fewer pixels than 2x
+    const dpr = Math.min(window.devicePixelRatio, 1.5)
     const isMobile = w < 768
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
     const setSize = () => {
       w = window.innerWidth
@@ -98,7 +100,7 @@ const ConstellationField = memo(({ theme = 'dark', className = '' }: Constellati
     const MOUSE_R = 180
     const REPEL_R = 50
     const CONNECT_R = isMobile ? 80 : 110
-    const TARGET_FPS = isMobile ? 30 : 60
+    const TARGET_FPS = isMobile || reduceMotion ? 30 : 60
     const FRAME_INTERVAL = 1000 / TARGET_FPS
     let time = 0
     let raf = 0

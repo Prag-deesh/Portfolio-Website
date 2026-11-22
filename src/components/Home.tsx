@@ -1,24 +1,17 @@
-import { useState, useEffect } from 'react'
-import { motion, useScroll, useTransform } from 'framer-motion'
+import { m as motion, useScroll, useTransform } from 'framer-motion'
 import { FiArrowDown } from 'react-icons/fi'
 import { HiOutlineDownload } from 'react-icons/hi'
 import { personalInfo, socialLinks, homeLabels } from '../helpers/constants'
-import { trackCvDownload, trackSocialClick } from '../helpers/analytics'
 import { btnPrimary, btnOutline, label, iconBtnMd } from '../helpers/styles'
 import {
   homeSection, homeContainer, homeGrid, homeHeading, homeTitle, homeTitleUnderline,
   homeDescription, homeCtas, homeHeroWrap, homeSocials,
 } from '../helpers/styles/components'
 import HeroAvatar from './HeroAvatar'
+import { useIsMobile } from '../helpers/useIsMobile'
 
 const Home = () => {
-  const [isMobile, setIsMobile] = useState(false)
-  useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth < 768)
-    check()
-    window.addEventListener('resize', check, { passive: true })
-    return () => window.removeEventListener('resize', check)
-  }, [])
+  const isMobile = useIsMobile()
 
   const { scrollY } = useScroll()
   // Disable scroll-linked transforms entirely on mobile for smoother scrolling
@@ -52,7 +45,7 @@ const Home = () => {
                 <a href="#contact" className={btnPrimary}>
                   {homeLabels.ctaPrimary} <FiArrowDown />
                 </a>
-                <a href={personalInfo.cvPath} download className={btnOutline} onClick={trackCvDownload}>
+                <a href={personalInfo.cvPath} download className={btnOutline}>
                   {homeLabels.ctaSecondary} <HiOutlineDownload />
                 </a>
               </div>
@@ -87,7 +80,6 @@ const Home = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3, delay: 0.7 + i * 0.1 }}
               className={iconBtnMd}
-              onClick={() => trackSocialClick(link.label, link.href)}
             >
               {link.icon}
             </motion.a>

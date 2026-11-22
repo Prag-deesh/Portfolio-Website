@@ -1,7 +1,7 @@
-import { useState, useEffect, memo } from 'react'
-import { motion } from 'framer-motion'
+import { memo, type CSSProperties } from 'react'
 import { personalInfo } from '../helpers/constants'
 import type { HeroAvatarProps } from '../helpers/interfaces'
+import { useIsMobile } from '../helpers/useIsMobile'
 
 /* Orbiting dots — 3 rings at different speeds & sizes */
 /* Radii are for md+ (370 container → 185 radius). Mobile uses scaled values. */
@@ -26,15 +26,12 @@ const orbitDotsSm = [
   { r: 140, speed: 26, size: 2.5, delay: 4 },
 ]
 
+/* Pulse between two opacity/scale values via CSS vars consumed by @keyframes hero-pulse */
+const pulse = (o1: number, o2: number, s1: number, s2: number, dur: number, delay = 0) =>
+  ({ '--o1': o1, '--o2': o2, '--s1': s1, '--s2': s2, animation: `hero-pulse ${dur}s ease-in-out ${delay}s infinite` }) as CSSProperties
+
 const HeroAvatar = memo(({ imageSrc, fallbackEmoji = '👨‍💻' }: HeroAvatarProps) => {
-  const [isMd, setIsMd] = useState(() => typeof window !== 'undefined' && window.innerWidth >= 768)
-  useEffect(() => {
-    const mq = window.matchMedia('(min-width: 768px)')
-    const handler = (e: MediaQueryListEvent) => setIsMd(e.matches)
-    mq.addEventListener('change', handler)
-    return () => mq.removeEventListener('change', handler)
-  }, [])
-  const orbitDots = isMd ? orbitDotsMd : orbitDotsSm
+  const orbitDots = useIsMobile() ? orbitDotsSm : orbitDotsMd
 
   return (
     <div className="hero-avatar-wrap relative w-[240px] h-[240px] sm:w-[280px] sm:h-[280px] md:w-[370px] md:h-[370px] mx-auto"
@@ -62,21 +59,19 @@ const HeroAvatar = memo(({ imageSrc, fallbackEmoji = '👨‍💻' }: HeroAvatar
 
       {/* ── Pulsing orbit rings ── */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-        <motion.div
+        <div
           className="absolute w-[230px] h-[230px] sm:w-[270px] sm:h-[270px] md:w-[360px] md:h-[360px] border border-dashed border-[var(--text-primary)] rounded-full"
-          animate={{ opacity: [0.06, 0.1, 0.06], scale: [1, 1.02, 1] }}
-          transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+          style={pulse(0.06, 0.1, 1, 1.02, 4)}
         />
-        <motion.div
+        <div
           className="absolute w-[200px] h-[200px] sm:w-[240px] sm:h-[240px] md:w-[330px] md:h-[330px] border border-dashed border-[var(--text-primary)] rounded-full"
-          animate={{ opacity: [0.04, 0.07, 0.04], scale: [1, 0.98, 1] }}
-          transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
+          style={pulse(0.04, 0.07, 1, 0.98, 5, 1)}
         />
       </div>
 
       {/* ── Orbiting dots ── */}
       {orbitDots.map((dot, i) => (
-        <motion.div
+        <div
           key={i}
           className="absolute pointer-events-none"
           style={{
@@ -86,11 +81,10 @@ const HeroAvatar = memo(({ imageSrc, fallbackEmoji = '👨‍💻' }: HeroAvatar
             left: '50%',
             marginTop: -dot.size / 2,
             marginLeft: -dot.size / 2,
+            animation: `hero-spin ${dot.speed}s linear ${dot.delay}s infinite`,
           }}
-          animate={{ rotate: [0, 360] }}
-          transition={{ duration: dot.speed, repeat: Infinity, ease: 'linear', delay: dot.delay }}
         >
-          <motion.div
+          <div
             style={{
               position: 'absolute',
               width: dot.size,
@@ -99,11 +93,10 @@ const HeroAvatar = memo(({ imageSrc, fallbackEmoji = '👨‍💻' }: HeroAvatar
               background: 'var(--text-primary)',
               top: -dot.r,
               left: 0,
+              ...pulse(0.3, 0.6, 1, 1, 3, dot.delay * 0.3),
             }}
-            animate={{ opacity: [0.3, 0.6, 0.3] }}
-            transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut', delay: dot.delay * 0.3 }}
           />
-        </motion.div>
+        </div>
       ))}
 
       {/* ── Main image container ── */}
@@ -111,12 +104,7 @@ const HeroAvatar = memo(({ imageSrc, fallbackEmoji = '👨‍💻' }: HeroAvatar
         <div className="absolute inset-0 bg-[var(--bg-secondary)]" />
 
         {imageSrc ? (
-          <motion.div
-            className="relative z-10 w-full h-full"
-            initial={{ scale: 1.1 }}
-            animate={{ scale: 1 }}
-            transition={{ duration: 1.5, ease: 'easeOut' }}
-          >
+          <div className="relative z-10 w-full h-full hero-zoom-in">
             <picture>
               <source
                 type="image/webp"
@@ -139,7 +127,7 @@ const HeroAvatar = memo(({ imageSrc, fallbackEmoji = '👨‍💻' }: HeroAvatar
                 decoding="async"
               />
             </picture>
-          </motion.div>
+          </div>
         ) : (
           <div className="relative z-10 w-full h-full flex items-center justify-center text-8xl select-none">
             {fallbackEmoji}
@@ -166,35 +154,31 @@ const HeroAvatar = memo(({ imageSrc, fallbackEmoji = '👨‍💻' }: HeroAvatar
       </div>
 
       {/* ── Primary rotating arcs ── */}
-      <motion.div
+      <div
         className="absolute inset-[10px] sm:inset-[12px] md:inset-[8px] pointer-events-none"
-        animate={{ rotate: 360 }}
-        transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
+        style={{ animation: 'hero-spin 20s linear infinite' }}
       >
         <svg viewBox="0 0 300 300" className="w-full h-full" fill="none">
           <path d="M 150 6 A 144 144 0 0 1 260 50" stroke="var(--text-primary)" strokeWidth="1.5" opacity="0.25" />
           <path d="M 150 294 A 144 144 0 0 1 40 250" stroke="var(--text-primary)" strokeWidth="1.5" opacity="0.25" />
         </svg>
-      </motion.div>
+      </div>
 
       {/* ── Counter-rotating dashed arcs ── */}
-      <motion.div
+      <div
         className="absolute inset-[4px] sm:inset-[6px] md:inset-[2px] pointer-events-none"
-        animate={{ rotate: -360 }}
-        transition={{ duration: 28, repeat: Infinity, ease: 'linear' }}
+        style={{ animation: 'hero-spin 28s linear infinite reverse' }}
       >
         <svg viewBox="0 0 300 300" className="w-full h-full" fill="none">
           <path d="M 30 80 A 148 148 0 0 1 30 220" stroke="var(--text-primary)" strokeWidth="1" opacity="0.12" strokeDasharray="5 10" />
           <path d="M 270 80 A 148 148 0 0 0 270 220" stroke="var(--text-primary)" strokeWidth="1" opacity="0.12" strokeDasharray="5 10" />
         </svg>
-      </motion.div>
+      </div>
 
       {/* ── Breathing glow ring ── */}
-      <motion.div
+      <div
         className="absolute inset-[14px] sm:inset-[18px] md:inset-[14px] pointer-events-none rounded-full"
-        style={{ border: '1px solid var(--text-primary)' }}
-        animate={{ opacity: [0.05, 0.12, 0.05], scale: [0.99, 1.01, 0.99] }}
-        transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+        style={{ border: '1px solid var(--text-primary)', ...pulse(0.05, 0.12, 0.99, 1.01, 4) }}
       />
 
       {/* ── Label ── */}

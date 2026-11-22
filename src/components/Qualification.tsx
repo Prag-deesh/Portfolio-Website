@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { m as motion, AnimatePresence } from 'framer-motion'
 import { HiOutlineCalendar } from 'react-icons/hi'
 import { education, experience, sections, qualificationTabs } from '../helpers/constants'
 import {

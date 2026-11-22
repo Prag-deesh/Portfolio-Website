@@ -8,19 +8,19 @@
     <!-- ── Primary Meta ── -->
     <meta
       name="description"
-      content="Pragadeesh — Software Engineer at Ford. Portfolio showcasing 9+ projects in Web Apps, Mobile Apps, Machine Learning, and Cyber Security. Currently building enterprise web applications."
+      content="Pragadeesh — Software Engineer at Ford, Chennai. Builds enterprise web apps and AI-powered tools. Blogger and open-source contributor. Projects in web, mobile, machine learning and cybersecurity."
     />
     <meta name="author" content="Pragadeesh" />
     <meta name="robots" content="index, follow" />
-    <link rel="canonical" href="https://pragadeesh.dev/" />
+    <link rel="canonical" href="https://pragadeesh.pages.dev/" />
 
     <!-- ── Open Graph (Facebook, LinkedIn, WhatsApp, Telegram, iMessage) ── -->
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Pragadeesh Portfolio" />
     <meta property="og:title" content="Pragadeesh — Software Engineer Portfolio" />
-    <meta property="og:description" content="Software Engineer at Ford. 9+ projects across web, mobile, ML & cybersecurity. Driven by curiosity, grounded by real-world engineering." />
-    <meta property="og:url" content="https://pragadeesh.dev/" />
-    <meta property="og:image" content="https://pragadeesh.dev/og-image.png" />
+    <meta property="og:description" content="Software Engineer at Ford building enterprise web apps and AI-powered tools. Blogger and open-source contributor." />
+    <meta property="og:url" content="https://pragadeesh.pages.dev/" />
+    <meta property="og:image" content="https://pragadeesh.pages.dev/og-image.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content="Pragadeesh — Software Engineer Portfolio" />
@@ -29,8 +29,8 @@
     <!-- ── Twitter Card ── -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Pragadeesh — Software Engineer Portfolio" />
-    <meta name="twitter:description" content="Software Engineer at Ford. 9+ projects across web, mobile, ML & cybersecurity." />
-    <meta name="twitter:image" content="https://pragadeesh.dev/og-image.png" />
+    <meta name="twitter:description" content="Software Engineer at Ford building enterprise web apps and AI-powered tools. Blogger and open-source contributor." />
+    <meta name="twitter:image" content="https://pragadeesh.pages.dev/og-image.png" />
     <meta name="twitter:image:alt" content="Pragadeesh — Software Engineer Portfolio" />
 
     <!-- ── Theme & Icons ── -->
@@ -41,22 +41,16 @@
     <link rel="manifest" href="/manifest.json" />
 
     <!-- ── Resource Hints ── -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="dns-prefetch" href="https://api.emailjs.com" />
-    <link rel="dns-prefetch" href="https://static.cloudflareinsights.com" />
-    <link rel="preload" as="image" type="image/webp" href="/profile-800.webp" fetchpriority="high" />
-
-    <!-- ── Non-render-blocking Fonts ── -->
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@500;600;700&display=swap"
-      rel="stylesheet"
-      media="print"
-      onload="this.media='all'"
+      rel="preload"
+      as="image"
+      type="image/webp"
+      href="/profile-800.webp"
+      imagesrcset="/profile-400.webp 400w, /profile-480.webp 480w, /profile-800.webp 800w"
+      imagesizes="(max-width: 640px) 280px, (max-width: 768px) 320px, 370px"
+      fetchpriority="high"
     />
-    <noscript>
-      <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@500;600;700&display=swap" rel="stylesheet" />
-    </noscript>
 
     <!-- ── Structured Data (JSON-LD) — helps Google Knowledge Panel ── -->
     <script type="application/ld+json">
@@ -66,10 +60,11 @@
       "name": "Pragadeesh",
       "jobTitle": "Software Engineer",
       "description": "Software Engineer at Ford. Building enterprise web applications with AI-powered workflows.",
-      "url": "https://pragadeesh.dev",
+      "url": "https://pragadeesh.pages.dev",
       "email": "mailto:pragadeeshgg@gmail.com",
       "address": {
         "@type": "PostalAddress",
+        "addressLocality": "Chennai",
         "addressCountry": "IN"
       },
       "alumniOf": {
@@ -84,9 +79,10 @@
         "https://github.com/Prag-deesh",
         "https://www.linkedin.com/in/pragadeeshwaran-k-j-440908268/",
         "https://www.instagram.com/wpragdeesh/",
-        "https://www.youtube.com/channel/UCSyMhE-Z1d4DRRiQj4ZhWzQ"
+        "https://www.youtube.com/channel/UCSyMhE-Z1d4DRRiQj4ZhWzQ",
+        "https://medium.com/@pragadeeshgg"
       ],
-      "knowsAbout": ["Web Development", "Mobile Development", "Machine Learning", "Cyber Security", "React", "TypeScript"]
+      "knowsAbout": ["Web Development", "React", "TypeScript", "AI-powered UI generation", "Legacy modernization", "Mobile Development", "Machine Learning", "Cyber Security"]
     }
     </script>
   </head>
@@ -94,15 +90,5 @@
     <noscript>Pragadeesh — Software Engineer Portfolio. Enable JavaScript to view this site.</noscript>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
-
-    <!-- ── Cloudflare Web Analytics (free, cookie-free, ~< 1KB) ── -->
-    <script
-      defer
-      src="https://static.cloudflareinsights.com/beacon.min.js"
-      data-cf-beacon='{"token": "bc7cbba108b346f2a7c9738d8f85b80b"}'
-    ></script>
-
-    <!-- ── Umami Analytics (free, cookie-free, visual dashboard) ── -->
-    <script defer src="https://cloud.umami.is/script.js" data-website-id="24782d00-d4d7-4e42-8ec5-9a9bb82f8e4d"></script>
   </body>
 </html>

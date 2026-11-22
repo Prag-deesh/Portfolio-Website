@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { m as motion, AnimatePresence } from 'framer-motion'
 import { HiOutlineArrowUp } from 'react-icons/hi'
 import { scrollUpBtn } from '../helpers/styles'
 

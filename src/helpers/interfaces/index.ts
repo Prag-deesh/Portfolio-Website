@@ -88,13 +88,6 @@ export interface HeroAvatarProps {
   fallbackEmoji?: string
 }
 
-export interface PlexusFrameProps {
-  imageSrc?: string
-  fallbackEmoji?: string
-  width?: string
-  height?: string
-}
-
 export interface ConstellationFieldProps {
   theme?: 'dark' | 'light'
   className?: string

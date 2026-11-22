@@ -23,7 +23,7 @@
 - **Responsive** — mobile-first, touch-optimized, 44px tap targets, works on all screen sizes
 - **Contact form** — powered by EmailJS (dynamically imported only on submit)
 - **SEO** — full Open Graph, Twitter Card, JSON-LD structured data, sitemap, robots.txt
-- **Analytics** — Cloudflare Web Analytics + custom event tracking (cookie-free)
+- **No tracking** — zero analytics scripts, zero cookies, no backend
 
 ---
 
@@ -35,12 +35,12 @@
 | **TypeScript 5.6** | Type-safe code throughout |
 | **Tailwind CSS v4** | Utility-first styling with `@theme` directive |
 | **Vite 8** | Build tool with Rollup + Lightning CSS |
-| **Framer Motion 12** | Scroll animations, parallax, hover effects |
+| **Framer Motion 12** | Scroll animations, parallax (via `LazyMotion` + `domAnimation`) |
 | **Canvas 2D API** | Constellation particle background (raw canvas, no library) |
 | **vite-plugin-compression2** | Pre-built Brotli + Gzip at build time |
 | **react-icons** | Icons (Heroicons, Feather, Bootstrap, SimpleIcons) |
 | **EmailJS** | Contact form delivery (dynamic import, no backend) |
-| **Cloudflare Pages** | Hosting with global CDN, Web Analytics |
+| **Cloudflare Pages** | Hosting with global CDN |
 
 ---
 
@@ -68,8 +68,8 @@ Total transfer size: **~137KB Brotli** (down from ~3.5MB). Builds in < 1 second.
 **How:** `React.lazy()` + `Suspense` for 7 below-fold components. Manual Rollup chunks split react, react-dom, framer-motion into separate vendor files.
 
 ### Fonts
-- Google Fonts (Inter + Sora) loaded **non-render-blocking** via `media="print"` trick with `onload="this.media='all'"`
-- `dns-prefetch` + `preconnect` for Google Fonts and EmailJS API
+- Inter + Sora self-hosted as variable fonts via `@fontsource-variable` — no third-party requests
+- Browser only downloads the Latin subset (`unicode-range`)
 
 ### Compression
 - **Brotli + Gzip** pre-built at build time via `vite-plugin-compression2`
@@ -135,10 +135,9 @@ src/
 │   ├── ScrollUp.tsx            → Scroll-to-top button
 │   ├── SectionReveal.tsx       → Scroll-triggered parallax wrapper
 │   ├── SectionHeader.tsx       → Reusable section title
-│   ├── PlexusFrame.tsx         → Plexus-bordered image frame
 │   └── TabBar.tsx              → Reusable tab switcher
 ├── helpers/
-│   ├── analytics.ts            → Custom event tracking (pageview, CV, sections)
+│   ├── useIsMobile.ts          → Shared mobile breakpoint hook (matchMedia)
 │   ├── constants/
 │   │   ├── personal.ts         → Name, bio, contact, CV path
 │   │   ├── skills.tsx          → Tech skills (primary, secondary, soft)
@@ -153,7 +152,7 @@ src/
 │   └── styles/
 │       ├── components.ts       → Component-specific Tailwind tokens
 │       └── index.ts            → Shared Tailwind tokens
-├── App.tsx                     → Root with lazy loading + analytics init
+├── App.tsx                     → Root with lazy loading + LazyMotion
 ├── main.tsx                    → Entry point
 └── index.css                   → Theme vars, keyframes, tap targets
 ```
@@ -169,44 +168,14 @@ src/
 | **JSON-LD** | `Person` schema — `jobTitle`, `worksFor`, `alumniOf`, `sameAs` (socials), `knowsAbout` |
 | **Canonical URL** | `<link rel="canonical">` |
 | **Sitemap** | `public/sitemap.xml` with `lastmod` and `changefreq` |
-| **Robots.txt** | `Allow: /`, `Disallow: /assets/`, sitemap reference |
+| **Robots.txt** | `Allow: /`, sitemap reference |
 | **OG Image** | Custom branded SVG → PNG (58KB) with name, role, trait pills |
 | **Semantic HTML** | `<section>`, `<nav>`, `<main>`, `<header>`, `<footer>`, proper heading hierarchy |
 | **Noscript fallback** | Text content visible when JS is disabled |
 
 ---
 
-## 📊 Analytics
-
-### Cloudflare Web Analytics (automatic)
-Free, cookie-free, < 1KB beacon script in `index.html`. Tracks:
-- Page views over time
-- Visitor countries & cities
-- Device type (desktop / mobile / tablet)
-- Browser & OS breakdown
-- Referrer sources (LinkedIn, GitHub, Google, direct)
-
-> **Setup:** Replace `YOUR_CF_ANALYTICS_TOKEN` in `index.html` with your token from Cloudflare Dashboard → Web Analytics.
-
-### Custom Event Tracker (`src/helpers/analytics.ts`)
-Lightweight module (~500 bytes Brotli) using `navigator.sendBeacon`:
-
-| Event | Data | Trigger |
-|---|---|---|
-| `pageview` | Full device fingerprint | Page load |
-| `cv_download` | Device info + timestamp | CV button click |
-| `section_view` | Section ID | Section enters viewport (IntersectionObserver) |
-| `section_time` | Section ID + seconds | Section leaves viewport |
-| `social_click` | Platform + URL | Social icon click |
-| `contact_submit` | Device info | Form submit success |
-
-**Device info collected:** screen resolution, viewport, DPR, platform, language, touch points, device memory, CPU cores, connection type (wifi/4g/3g), speed (Mbps), timezone (approximate location), referrer, user agent, timestamp.
-
-> **Setup:** Set `VITE_ANALYTICS_URL` env var to your Cloudflare Worker endpoint. Without it, custom events are silently skipped (zero overhead).
-
----
-
-## 📱 Mobile Optimizations
+##  Mobile Optimizations
 
 | Area | What |
 |---|---|
@@ -242,9 +211,6 @@ Everything is in **`src/helpers/constants/`** — edit and save:
 VITE_EMAILJS_SERVICE_ID=your_service_id
 VITE_EMAILJS_TEMPLATE_ID=your_template_id
 VITE_EMAILJS_PUBLIC_KEY=your_public_key
-
-# Custom analytics endpoint (optional — Cloudflare Worker URL)
-VITE_ANALYTICS_URL=https://your-worker.your-domain.workers.dev/events
 ```
 
 ---

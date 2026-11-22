@@ -1,10 +1,10 @@
 import { useState, useEffect, lazy, Suspense } from 'react'
+import { LazyMotion, domAnimation } from 'framer-motion'
 import Header from './components/Header'
 import Home from './components/Home'
 import ConstellationField from './components/ConstellationField'
 import GradientBlobs from './components/FloatingShapes'
 import SectionReveal from './components/SectionReveal'
-import { initAnalytics } from './helpers/analytics'
 
 // Lazy load below-the-fold sections — only fetched when needed
 const About = lazy(() => import('./components/About'))
@@ -31,13 +31,10 @@ function App() {
     document.querySelector('meta[name="theme-color"][media*="dark"]')?.setAttribute('content', color)
   }, [theme])
 
-  // Analytics — fire once on mount
-  useEffect(() => { initAnalytics() }, [])
-
   const toggleTheme = () => setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'))
 
   return (
-    <>
+    <LazyMotion features={domAnimation} strict>
       <ConstellationField theme={theme} />
       <GradientBlobs theme={theme} />
       <Header theme={theme} toggleTheme={toggleTheme} />
@@ -67,7 +64,7 @@ function App() {
         <Footer />
         <ScrollUp />
       </Suspense>
-    </>
+    </LazyMotion>
   )
 }
 

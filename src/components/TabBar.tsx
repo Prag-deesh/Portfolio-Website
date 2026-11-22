@@ -1,6 +1,6 @@
 /* ── Shared tab bar ─────────────────────────── */
 
-import { motion } from 'framer-motion'
+import { m as motion } from 'framer-motion'
 import { filterBtnActive, filterBtnInactive } from '../helpers/styles'
 import { workTabBtn, workTabIcon } from '../helpers/styles/components'
 import type { TabItem } from '../helpers/interfaces'

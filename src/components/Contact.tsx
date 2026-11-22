@@ -1,10 +1,10 @@
 import { useRef, useState } from 'react'
-import { motion } from 'framer-motion'
+import { m as motion } from 'framer-motion'
 import { HiOutlineMail, HiOutlineLocationMarker } from 'react-icons/hi'
 import { FiSend, FiCheck, FiAlertCircle } from 'react-icons/fi'
+import { FiLinkedin } from 'react-icons/fi'
 import { FaWhatsapp } from 'react-icons/fa'
-import { personalInfo, sections, contactLabels } from '../helpers/constants'
-import { trackContactSubmit } from '../helpers/analytics'
+import { personalInfo, sections, contactLabels, socialLinks } from '../helpers/constants'
 import {
   container, contactCard, contactIcon, input, slideIn, fadeIn,
 } from '../helpers/styles'
@@ -20,6 +20,9 @@ const cl = contactLabels
 const Contact = () => {
   const formRef = useRef<HTMLFormElement>(null)
   const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle')
+  const whatsappDigits = personalInfo.phone.replace(/\D/g, '')
+  const hasPublicWhatsappNumber = whatsappDigits.length > 0
+  const linkedInUrl = socialLinks.find((link) => link.label === 'LinkedIn')?.href
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -35,7 +38,6 @@ const Contact = () => {
         import.meta.env.VITE_EMAILJS_PUBLIC_KEY
       )
       setStatus('success')
-      trackContactSubmit()
       formRef.current.reset()
       setTimeout(() => setStatus('idle'), 4000)
     } catch {
@@ -61,18 +63,43 @@ const Contact = () => {
               </div>
             </a>
 
-            <a
-              href={`https://api.whatsapp.com/send?phone=${personalInfo.phone.replace(/\D/g, '')}&text=${cl.whatsappGreeting}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={`${contactCard} ${contactCardSpaced}`}
-            >
-              <FaWhatsapp className={contactIcon} />
-              <div>
-                <h4 className={contactInfoTitle}>{cl.whatsappLabel}</h4>
-                <p className={contactInfoValue}>{personalInfo.phone}</p>
+            {hasPublicWhatsappNumber ? (
+              <a
+                href={`https://api.whatsapp.com/send?phone=${whatsappDigits}&text=${cl.whatsappGreeting}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`${contactCard} ${contactCardSpaced}`}
+              >
+                <FaWhatsapp className={contactIcon} />
+                <div>
+                  <h4 className={contactInfoTitle}>{cl.whatsappLabel}</h4>
+                  <p className={contactInfoValue}>{personalInfo.phone}</p>
+                </div>
+              </a>
+            ) : (
+              <div className={`${contactCard} ${contactCardSpaced}`}>
+                <FaWhatsapp className={contactIcon} />
+                <div>
+                  <h4 className={contactInfoTitle}>{cl.whatsappLabel}</h4>
+                  <p className={contactInfoValue}>{personalInfo.phone}</p>
+                </div>
               </div>
-            </a>
+            )}
+
+            {linkedInUrl && (
+              <a
+                href={linkedInUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`${contactCard} ${contactCardSpaced}`}
+              >
+                <FiLinkedin className={contactIcon} />
+                <div>
+                  <h4 className={contactInfoTitle}>LinkedIn</h4>
+                  <p className={contactInfoValue}>DM on LinkedIn</p>
+                </div>
+              </a>
+            )}
 
             <div className={contactCard}>
               <HiOutlineLocationMarker className={contactIcon} />

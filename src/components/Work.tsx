@@ -1,10 +1,11 @@
 import { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { m as motion, AnimatePresence } from 'framer-motion'
 import { FiExternalLink } from 'react-icons/fi'
 import { companyProjects, collegeProjects, collegeCategories, sections, portfolioTabs, portfolioLabels } from '../helpers/constants'
 import { container, filterBtnActive, filterBtnInactive, fadeIn, fadeUp } from '../helpers/styles'
 import {
   workSection, workTabsWrap, workSubFiltersWrap, workSubFilterBtn,
+  workCompanyLabel,
   workCompanyGrid, workCollegeGrid, workCompanyCard, workCompanyEmoji, workCompanyBody,
   workCardTitle, workCardTitleLg, workCardDescription, workCardDescriptionLg,
   workTagsWrap, workTagsWrapMb, workTag, workCollegeCard, workCollegeEmojiWrap,
@@ -37,6 +38,10 @@ const Work = () => {
           animation={fadeIn(0.2)}
           className={workTabsWrap}
         />
+
+        {tab === 'company' && (
+          <div className={workCompanyLabel}>Ford Projects I Worked On</div>
+        )}
 
         <AnimatePresence>
           {tab === 'college' && (
